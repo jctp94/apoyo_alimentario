@@ -1,0 +1,1 @@
+@ /home/skamilo11/Dropbox/semestre12/BasesDeDatos2/Taller1_CasoDeEstudio_ApoyoAlimentario/ModeloYScript/Script_ModeloApoyo.sql
