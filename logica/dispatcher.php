@@ -1,0 +1,104 @@
+<?php
+
+include_once ("Login.php");
+include_once('../datos/manejoLoginDAO.php');
+include_once('../datos/EstudianteDAO.php');
+include_once('../datos/convocatoriaDAO.php');
+include_once('../datos/RegistroDAO.php');
+include_once("Solicitud.php");
+include_once('../datos/SolicitudDAO.php');
+include_once("../presentacion/libs/class.upload.php");
+include_once("Registro.php");
+if($_POST){
+
+ if( isset($_POST['login']) ){
+	  login($_POST['login']);
+	}elseif (isset($_POST['cargarDatosEst'])) {
+		cargarDatos();
+	}elseif( isset($_POST['convocatoria']) ){
+	  crearConvocatoria($_POST['convocatoria']);
+	}elseif (isset($_POST['solicitud'])){
+		crearSolicitud();
+	}elseif (isset($_POST['registrarse'])) {
+		registrarse($_POST['registrarse']);
+	}elseif (isset($_POST['log'])) {
+    verlog();
+	}
+}
+if($_FILES){
+	$docs = array("doc11","doc12","doc13", "doc14", "doc21","doc22","doc23","doc24","doc31","doc32","doc33","doc34","doc41","doc42");
+  $sol=new SolicitudDAO();
+	$rta=$sol->registrarSolicitud($docs);
+	echo $rta["mensaje"];
+
+}
+function verlog(){
+  session_start();
+  if (!$_SESSION['usuario']) {
+    echo 'no';
+  }else {
+    echo $_SESSION['usuario'];
+  }
+}
+function registrarse($credenciales){
+	$registro = new Registro($credenciales['codigo'],$credenciales['pswd'],"estudiante");
+	$registroDAO = new registroDAO();
+	$rta=$registroDAO->registrarse($registro);
+	if ($rta["estado"]=="creado") {
+		$reg=(array) $rta["registro"];
+		echo json_encode($reg);
+	}else {
+		echo $rta["mensaje"];
+	}
+}
+
+function cargarDatos(){
+	$EstudianteDAO = new EstudianteDAO();
+	$rta=$EstudianteDAO->consultarEstudiante();
+	if ($rta["estado"]) {
+		$prueba=(array) $rta["estudiante"];
+		echo json_encode($prueba);
+	}else {
+		echo $rta["mensaje"];
+	}
+}
+function login($credenciales){
+ /* parecido a recursos humanos*/
+ 		$log= new Login($credenciales["usuario"],$credenciales["pswd"]);
+		$manejoLoginDAO= new manejoLoginDAO();
+		$rta=$manejoLoginDAO->mostrarInterfaz($log);
+		if ($rta["estado"]) {
+			session_start();
+       $_SESSION['usuario'] = $credenciales["usuario"];
+			 $_SESSION['pswd']=$credenciales["pswd"];
+			 $_SESSION['rol']=$rta["login"]->getRol();
+			if ($rta["login"]->getRol()=="estudiante") {
+				echo "estudiante";
+			}elseif ($rta["login"]->getRol()=="adminapoyo") {
+				echo "adminapoyo";
+			}
+			else {
+				echo "aotro";
+			}
+
+		}else {
+			echo $rta["mensaje"];
+		}
+}
+
+
+function crearConvocatoria($convocatoria){
+	$cupoTotal=$convocatoria["cuposTipoA"]+$convocatoria["cuposTipoB"]+$convocatoria["cuposTotal"];
+	$convoca= new Convocatoria(
+		$convocatoria["F_INICONV"],
+		$convocatoria["F_FINCONV"],
+		$convocatoria["V_COSTOALMUERZO"],
+		$cupoTotal,
+		"A",
+		"00000008"
+		);
+
+	$convocatoriaDAO= new convocatoriaDAO();
+	$rta=$convocatoriaDAO->insertarConvocatoria($convoca, $convocatoria["cuposTipoA"], $convocatoria["cuposTipoB"], $convocatoria["cuposTotal"]);
+	echo $rta["mensaje"];
+}
