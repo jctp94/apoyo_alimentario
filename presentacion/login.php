@@ -91,17 +91,17 @@
                     $("#btn-enviar").val("Procesando, espere por favor...");
             },
 			success: function(respuesta){
-				location.href='menu.php';
-			/*	if (respuesta=="estudiante") {
-					location.href='crearSolicitud.php';
+
+				if (respuesta=="estudiante") {
+					location.href='menu.php';
 				}
 				else if (respuesta=="adminapoyo") {
-            location.href='crearConvocatoria.php';
+            location.href='menu.php';
 				}
 				else {
 					swal("Error", respuesta, "error");
 				}
-*/
+
 
 			},
 			error: function (xhr, ajaxOptions, thrownError) {

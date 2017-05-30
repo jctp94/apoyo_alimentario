@@ -1,6 +1,6 @@
 <?php
 include_once('Conexion.php');
-include_once('../logica/convocatoria.php');
+include_once('../logica/Convocatoria.php');
   class convocatoriaDAO {
 
     public function __construct() {
@@ -75,7 +75,7 @@ include_once('../logica/convocatoria.php');
         $r = oci_execute($stid);
         if (!$r) {
             $e = oci_error($stid);  // Para errores de oci_execute, pase el gestor de sentencia
-            
+
             $rta = array(
                 "estado" => false,
                 "mensaje" => $e['message'],
