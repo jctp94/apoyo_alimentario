@@ -42,8 +42,17 @@
 						<form name="logueo" action="crearConvocatoria.php" method="POST" class="md-col-4">
 				        	<button type="submit" class="botonSubmit">CREAR CONVOCATORIA</button>
 						</form>
-					</div>					
-				</div>	
+					</div>	
+				</div>
+                <div class="row">
+                    <hr>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <button id="salir" class="botonSubmit">Salir</button>
+					</div>	
+                </div>
 				<br>
 			</div>
 		</div>
@@ -54,3 +63,20 @@
 
 </body>
 </html>
+    
+<script src="js/jquery.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#salir").click(function(){
+            $.ajax({
+			 url  : "../logica/dispatcher.php",
+			 type : "post",
+			 datatype : "json",
+			 data : { salir : "salir"},
+			 success: function(respuesta){
+				location.href='principalApoyo.php';
+			 }
+		    });
+        });
+	});    
+</script>

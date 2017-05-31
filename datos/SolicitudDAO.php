@@ -18,7 +18,7 @@ include_once('../logica/Solicitud.php');
         );
         return $error;
       }else {
-        $consulta="INSERT INTO SOLICITUD VALUES ((SELECT MAX(K_IDSOL)+1 FROM SOLICITUD),'P', NULL, 'Solicitud pendiente de revisión',(SELECT LTRIM(USER, 'U') FROM DUAL), (SELECT K_IDCONV FROM CONVOCATORIA WHERE I_ESTADOCONV='A'))";
+        $consulta="INSERT INTO SOLICITUD VALUES (incremento_id_solicitud.nextval,'P', NULL, 'Solicitud pendiente de revisión',(SELECT LTRIM(USER, 'U') FROM DUAL), (SELECT K_IDCONV FROM CONVOCATORIA WHERE I_ESTADOCONV='A'))";
         $stid = oci_parse($array["conexion"], $consulta);
         $r = @oci_execute($stid);
         if (!$r) {
@@ -45,7 +45,7 @@ include_once('../logica/Solicitud.php');
       				$pdf->process('../archivos/');
               $ruta="../archivos/".$_SESSION['usuario'].$docs[$i];
       				//echo 'El pdf ha sido subido correctamente';
-              $insertar="INSERT INTO SOPORTE VALUES ((SELECT MAX(K_IDSOP)+1 FROM SOPORTE),'".$ruta."', (SELECT N_DESCCOND FROM CONDICION WHERE K_IDCOND=".substr($docs[$i], -2)."), 'P', NULL,(SELECT K_IDSOL FROM SOLICITUD WHERE K_CODEST=(SELECT LTRIM(USER, 'U') FROM DUAL)) ,".substr($docs[$i], -2).")";
+              $insertar="INSERT INTO SOPORTE VALUES (incremento_id_soporte.nextval,'".$ruta."', (SELECT N_DESCCOND FROM CONDICION WHERE K_IDCOND=".substr($docs[$i], -2)."), 'P', NULL,(SELECT K_IDSOL FROM SOLICITUD WHERE K_CODEST=(SELECT LTRIM(USER, 'U') FROM DUAL)) ,".substr($docs[$i], -2).")";
               $stid = oci_parse($array["conexion"], $insertar);
               $r = @oci_execute($stid);
               if (!$r) {

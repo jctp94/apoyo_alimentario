@@ -19,7 +19,7 @@ include_once('../logica/Convocatoria.php');
         return $error;
       }else {
         $convocatoria="INSERT INTO CONVOCATORIA VALUES (
-          (SELECT MAX(K_IDCONV)+1 FROM CONVOCATORIA),
+          incremento_id_convocatoria.nextval,
           TO_DATE('".$convocatoria->getF_INICONV()."','YYYY-MM-DD'),
           TO_DATE('".$convocatoria->getF_FINCONV()."','YYYY-MM-DD'),
           TO_DATE(SYSDATE,'YYYY-MM-DD'),
@@ -30,11 +30,11 @@ include_once('../logica/Convocatoria.php');
         // en este momento debo tener id conocatoria recien creada
 
 
-        $tipoa="INSERT INTO CUPOSCONVOCATORIA VALUES ((SELECT MAX(K_IDCUPOSCONV)+1 FROM CUPOSCONVOCATORIA), 'A', ".$cuposA.", (SELECT MAX(K_IDCONV) FROM CONVOCATORIA))";
+        $tipoa="INSERT INTO CUPOSCONVOCATORIA VALUES (incremento_id_cuposconv.nextval, 'A', ".$cuposA.", (SELECT MAX(K_IDCONV) FROM CONVOCATORIA))";
 
-        $tipob="INSERT INTO CUPOSCONVOCATORIA VALUES ((SELECT MAX(K_IDCUPOSCONV)+1 FROM CUPOSCONVOCATORIA), 'B', ".$cuposB.", (SELECT MAX(K_IDCONV) FROM CONVOCATORIA))";
+        $tipob="INSERT INTO CUPOSCONVOCATORIA VALUES (incremento_id_cuposconv.nextval, 'B', ".$cuposB.", (SELECT MAX(K_IDCONV) FROM CONVOCATORIA))";
 
-        $tipot="INSERT INTO CUPOSCONVOCATORIA VALUES ((SELECT MAX(K_IDCUPOSCONV)+1 FROM CUPOSCONVOCATORIA), 'T', ".$cuposTotal.",(SELECT MAX(K_IDCONV) FROM CONVOCATORIA))";
+        $tipot="INSERT INTO CUPOSCONVOCATORIA VALUES (incremento_id_cuposconv.nextval, 'T', ".$cuposTotal.",(SELECT MAX(K_IDCONV) FROM CONVOCATORIA))";
 
         $stid = oci_parse($array["conexion"], $convocatoria);
         $r = oci_execute($stid);

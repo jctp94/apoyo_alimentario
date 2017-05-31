@@ -22,8 +22,11 @@ if($_POST){
 	}elseif (isset($_POST['registrarse'])) {
 		registrarse($_POST['registrarse']);
 	}elseif (isset($_POST['log'])) {
-    verlog();
-	}
+        verlog();
+	}elseif (isset($_POST['salir'])) {
+        session_start();
+        session_destroy();
+    }
 }
 if($_FILES){
 	$docs = array("doc11","doc12","doc13", "doc14", "doc21","doc22","doc23","doc24","doc31","doc32","doc33","doc34","doc41","doc42");
@@ -80,7 +83,6 @@ function login($credenciales){
 			else {
 				echo "aotro";
 			}
-
 		}else {
 			echo $rta["mensaje"];
 		}

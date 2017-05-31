@@ -91,18 +91,16 @@
                     $("#btn-enviar").val("Procesando, espere por favor...");
             },
 			success: function(respuesta){
-
+                console.log(respuesta);
 				if (respuesta=="estudiante") {
 					location.href='menu.php';
 				}
 				else if (respuesta=="adminapoyo") {
-            location.href='menu.php';
+                    location.href='menu.php';
 				}
 				else {
 					swal("Error", respuesta, "error");
 				}
-
-
 			},
 			error: function (xhr, ajaxOptions, thrownError) {
         alert(xhr.status);

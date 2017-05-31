@@ -2,30 +2,27 @@
 -- Cambiar columna
 -- *subconsulta para hacer el autonumérico
 -- *subconsulta para insertar el usuario qu está en la sesión
-INSERT INTO CONVOCATORIA VALUES (1, TO_DATE('2016-07-02','YYYY-MM-DD'), TO_DATE('2016-07-29','YYYY-MM-DD'), TO_DATE(SYSDATE,'YYYY-MM-DD'), 2000, 100, 'C', (SELECT LTRIM(USER, 'U') FROM DUAL), 00000014, 00000007);
-INSERT INTO CONVOCATORIA VALUES ((SELECT MAX(K_IDCONV)+1 FROM CONVOCATORIA), TO_DATE('2017-07-02','YYYY-MM-DD'), TO_DATE(SYSDATE,'YYYY-MM-DD'), TO_DATE(SYSDATE,'YYYY-MM-DD'), 2500, 1500, 'A', (SELECT LTRIM(USER, 'U') FROM DUAL), 00000016, 00000008);
+INSERT INTO CONVOCATORIA VALUES (incremento_id_convocatoria.nextval, TO_DATE('2017-07-02','YYYY-MM-DD'), TO_DATE(SYSDATE,'YYYY-MM-DD'), TO_DATE(SYSDATE,'YYYY-MM-DD'), 2500, 1500, 'A', (SELECT LTRIM(USER, 'U') FROM DUAL), 00000016, 00000008);
 
 
 --Inserciones en CuposConvocatoria
-INSERT INTO CUPOSCONVOCATORIA VALUES (1, 'T', 700, 1);
-INSERT INTO CUPOSCONVOCATORIA VALUES ((SELECT MAX(K_IDCUPOSCONV)+1 FROM CUPOSCONVOCATORIA), 'A', 300, 1);
-INSERT INTO CUPOSCONVOCATORIA VALUES ((SELECT MAX(K_IDCUPOSCONV)+1 FROM CUPOSCONVOCATORIA), 'B', 200, 1);
-INSERT INTO CUPOSCONVOCATORIA VALUES ((SELECT MAX(K_IDCUPOSCONV)+1 FROM CUPOSCONVOCATORIA), 'T', 800, 2);
-INSERT INTO CUPOSCONVOCATORIA VALUES ((SELECT MAX(K_IDCUPOSCONV)+1 FROM CUPOSCONVOCATORIA), 'A', 400, 2);
-INSERT INTO CUPOSCONVOCATORIA VALUES ((SELECT MAX(K_IDCUPOSCONV)+1 FROM CUPOSCONVOCATORIA), 'B', 300, 2);
+INSERT INTO CUPOSCONVOCATORIA VALUES (incremento_id_cuposconv.nextval, 'A', 300, 1);
+INSERT INTO CUPOSCONVOCATORIA VALUES (incremento_id_cuposconv.nextval, 'B', 200, 1);
+INSERT INTO CUPOSCONVOCATORIA VALUES (incremento_id_cuposconv.nextval, 'T', 800, 2);
+INSERT INTO CUPOSCONVOCATORIA VALUES (incremento_id_cuposconv.nextval, 'A', 400, 2);
+INSERT INTO CUPOSCONVOCATORIA VALUES (incremento_id_cuposconv.nextval, 'B', 300, 2);
 
 
 -- Inserciones en solicitud
 -- Cambiar columna
 -- Genérico (con el usuario logueado):
-INSERT INTO SOLICITUD VALUES ((SELECT MAX(K_IDSOL)+1 FROM SOLICITUD), 'P', NULL, NULL, (SELECT LTRIM(USER, 'U') FROM DUAL), 2);
+INSERT INTO SOLICITUD VALUES (incremento_id_solicitud.nextval, 'P', NULL, NULL, (SELECT LTRIM(USER, 'U') FROM DUAL), 2);
 -- EspEcífico:
-INSERT INTO SOLICITUD VALUES (1, 'A', 80, NULL, 20121020099, 1);
-INSERT INTO SOLICITUD VALUES ((SELECT MAX(K_IDSOL)+1 FROM SOLICITUD), 'R', 5, 'El estudiante tiene documentacion incompleta', (SELECT LTRIM(USER, 'U') FROM DUAL), 1);
-INSERT INTO SOLICITUD VALUES ((SELECT MAX(K_IDSOL)+1 FROM SOLICITUD), 'A', 85, NULL, 20112020018, 1);
-INSERT INTO SOLICITUD VALUES ((SELECT MAX(K_IDSOL)+1 FROM SOLICITUD), 'P', NULL, NULL, 20121020099, 2);
-INSERT INTO SOLICITUD VALUES ((SELECT MAX(K_IDSOL)+1 FROM SOLICITUD), 'P', NULL, NULL, 20112020048, 2);
-INSERT INTO SOLICITUD VALUES ((SELECT MAX(K_IDSOL)+1 FROM SOLICITUD), 'P', NULL, NULL, 20112020018, 2);
+INSERT INTO SOLICITUD VALUES (incremento_id_solicitud.nextval, 'R', 5, 'El estudiante tiene documentacion incompleta', (SELECT LTRIM(USER, 'U') FROM DUAL), 1);
+INSERT INTO SOLICITUD VALUES (incremento_id_solicitud.nextval, 'A', 85, NULL, 20112020018, 1);
+INSERT INTO SOLICITUD VALUES (incremento_id_solicitud.nextval, 'P', NULL, NULL, 20121020099, 2);
+INSERT INTO SOLICITUD VALUES (incremento_id_solicitud.nextval, 'P', NULL, NULL, 20112020048, 2);
+INSERT INTO SOLICITUD VALUES (incremento_id_solicitud.nextval, 'P', NULL, NULL, 20112020018, 2);
 
 
 -- Inserciones en soporte
@@ -34,15 +31,14 @@ INSERT INTO SOLICITUD VALUES ((SELECT MAX(K_IDSOL)+1 FROM SOLICITUD), 'P', NULL,
 -- Entonces modificar esa columna para que permita valores nulos así:
 
 -- Luego sí las inserciones
-INSERT INTO SOPORTE VALUES (1, NULL, '820857', 'A', 10, 1, 11);
-INSERT INTO SOPORTE VALUES ((SELECT MAX(K_IDSOP)+1 FROM SOPORTE), NULL, 'Sostiene el hogar en el que vive', 'A', 10, 1, 21);
-INSERT INTO SOPORTE VALUES ((SELECT MAX(K_IDSOP)+1 FROM SOPORTE), NULL, 'Vive en casa del empleador', 'A', 5, 1, 31);
-INSERT INTO SOPORTE VALUES ((SELECT MAX(K_IDSOP)+1 FROM SOPORTE), NULL, 'Se encuentra en condición de desplazamiento forzado', 'A', 5, 1, 32);
-INSERT INTO SOPORTE VALUES ((SELECT MAX(K_IDSOP)+1 FROM SOPORTE), NULL, 'Presenta algun tipo de discapacidad fisica o mental', 'A', 5, 1, 41);
-INSERT INTO SOPORTE VALUES ((SELECT MAX(K_IDSOP)+1 FROM SOPORTE), NULL, '820857', 'P', 0, 4, NULL);
-INSERT INTO SOPORTE VALUES ((SELECT MAX(K_IDSOP)+1 FROM SOPORTE), NULL, 'N/A', 'P', 0, 4, NULL);
-INSERT INTO SOPORTE VALUES ((SELECT MAX(K_IDSOP)+1 FROM SOPORTE), NULL, 'N/A', 'P', 0, 4, NULL);
-INSERT INTO SOPORTE VALUES ((SELECT MAX(K_IDSOP)+1 FROM SOPORTE), NULL, 'N/A', 'P', 0, 4, NULL);
+INSERT INTO SOPORTE VALUES (incremento_id_soporte.nextval, NULL, 'Sostiene el hogar en el que vive', 'A', 10, 1, 21);
+INSERT INTO SOPORTE VALUES (incremento_id_soporte.nextval, NULL, 'Vive en casa del empleador', 'A', 5, 1, 31);
+INSERT INTO SOPORTE VALUES (incremento_id_soporte.nextval, NULL, 'Se encuentra en condición de desplazamiento forzado', 'A', 5, 1, 32);
+INSERT INTO SOPORTE VALUES (incremento_id_soporte.nextval, NULL, 'Presenta algun tipo de discapacidad fisica o mental', 'A', 5, 1, 41);
+INSERT INTO SOPORTE VALUES (incremento_id_soporte.nextval, NULL, '820857', 'P', 0, 4, NULL);
+INSERT INTO SOPORTE VALUES (incremento_id_soporte.nextval, NULL, 'N/A', 'P', 0, 4, NULL);
+INSERT INTO SOPORTE VALUES (incremento_id_soporte.nextval, NULL, 'N/A', 'P', 0, 4, NULL);
+INSERT INTO SOPORTE VALUES (incremento_id_soporte.nextval, NULL, 'N/A', 'P', 0, 4, NULL);
 
 
 -- Consulta para traer toda la información de las tablas

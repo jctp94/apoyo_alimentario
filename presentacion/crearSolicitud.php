@@ -151,6 +151,7 @@
 					    </div>
 					  </div>
 					<button type="submit" class="botonSubmit">ENVIAR</button>
+                    <button id="inicio" class="botonSubmit">INICIO</button>
 					<br><br>
 				</div>
 			</form>
@@ -175,10 +176,13 @@ $(document).ready(function(){
 	    	$("#div"+id).css("display","block");
 	    	$("#doc"+id).attr("required","true");
 	    }else{
-	    	$("#div"+id).css("display","none");
-	    	$("#doc"+id).attr("required","false");
+            $("#div"+id).css("display","none");
+            $("#doc"+id).removeAttr("required");
 	    }
 	});
+    $("#inicio").click(function(){
+        location.href='menu.php';
+    });
 
 });
 function verlog(){
@@ -216,7 +220,6 @@ function cargarDatos(){
 }
 $('#form-datos').submit(function(){
 	event.preventDefault();
-
 	form  = $(this).attr("id");
 	datos={};
 	//capturando selects

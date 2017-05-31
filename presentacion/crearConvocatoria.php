@@ -80,6 +80,7 @@
 					  </div>
 
 					<button type="submit" class="botonSubmit">ENVIAR</button>
+                    <button id="inicio" class="botonSubmit">INICIO</button>
 					<br><br>
 				</div>
 			</form>
@@ -94,9 +95,11 @@
 	// FORMULARIO DATOS COMPAÑIA
 	$(document).ready(function(){
 		verlog();
+        $("#inicio").click(function(){
+            location.href='menu.php';
+        });
 	});
 	function verlog(){
-
 		$.ajax({
 			url  : "../logica/dispatcher.php",
 			type : "post",
