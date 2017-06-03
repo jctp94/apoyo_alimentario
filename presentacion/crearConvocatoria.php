@@ -106,10 +106,11 @@
 			datatype : "json",
 			data : { log : "estudiante"},
 			success: function(respuesta){
-				if (respuesta=="no") {
+				if (respuesta!="si") {
 					location.href='principalApoyo.php';
 				}
 				console.log(String(respuesta));
+				console.log("hola");
 			}
 		});
 	}

@@ -169,7 +169,7 @@
 
 $(document).ready(function(){
 	verlog();
-	$("input[type='checkbox']").change(function() {			
+	$("input[type='checkbox']").change(function() {
 		var id=this.getAttribute("id");
     	//alert(id);
 	    if(this.checked) {
@@ -193,7 +193,7 @@ function verlog(){
 		datatype : "json",
 		data : { log : "estudiante"},
 		success: function(respuesta){
-			if (respuesta=="no") {
+			if (respuesta!="si") {
 				location.href='principalApoyo.php';
 			}
 			console.log(String(respuesta));

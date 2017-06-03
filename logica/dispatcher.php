@@ -37,10 +37,10 @@ if($_FILES){
 }
 function verlog(){
   session_start();
-  if (!$_SESSION['usuario']) {
-    echo 'no';
+  if (!$_SESSION['usuario']){
+    echo "no";
   }else {
-    echo $_SESSION['usuario'];
+    echo "si";
   }
 }
 function registrarse($credenciales){

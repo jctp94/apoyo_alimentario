@@ -1,8 +1,8 @@
 <?php
-//Variables de entorno para Linux 
-//PutEnv("ORACLE_SID=XE");
-//PutEnv("ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe");
-//PutEnv("LD_LIBRARY_PATH=/u01/app/oracle/product/11.2.0/xe/lib");
+//Variables de entorno para Linux
+PutEnv("ORACLE_SID=XE");
+PutEnv("ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe");
+PutEnv("LD_LIBRARY_PATH=/u01/app/oracle/product/11.2.0/xe/lib");
   class Conexion {
     private $usuario;
     private $paswd;
