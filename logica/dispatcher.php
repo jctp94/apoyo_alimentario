@@ -1,5 +1,5 @@
 <?php
-
+insertSendinBlue("Camilo", "skamilo9406@gmail.com");
 include_once ("Login.php");
 include_once('../datos/manejoLoginDAO.php');
 include_once('../datos/EstudianteDAO.php');
@@ -10,7 +10,6 @@ include_once('../datos/SolicitudDAO.php');
 include_once("../presentacion/libs/class.upload.php");
 include_once("Registro.php");
 if($_POST){
-
  if( isset($_POST['login']) ){
 	  login($_POST['login']);
 	}elseif (isset($_POST['cargarDatosEst'])) {
@@ -35,6 +34,20 @@ if($_FILES){
 	echo $rta["mensaje"];
 
 }
+
+//insertSendinBlue("Nombre", "correo");
+//
+function insertSendinBlue($nombre, $email){
+    require('../datos/mailin.php');
+    $mailin = new Mailin("https://api.sendinblue.com/v2.0","SYz3MEcnpqsN2hA8");
+    $data = array( "email" => "".$email."",
+        "attributes" => array(                
+            "NOMBRE"=>"".$nombre.""),                 
+        "listid" => array(50)
+    );        
+    echo json_encode($mailin->create_update_user($data));
+}
+
 function verlog(){
   session_start();
   if (!$_SESSION['usuario']){
