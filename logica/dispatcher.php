@@ -1,5 +1,5 @@
 <?php
-insertSendinBlue("Camilo", "skamilo9406@gmail.com");
+// insertSendinBlue("Camilo", "skamilo9406@gmail.com");
 include_once ("Login.php");
 include_once('../datos/manejoLoginDAO.php');
 include_once('../datos/EstudianteDAO.php');
@@ -39,12 +39,12 @@ if($_FILES){
 //
 function insertSendinBlue($nombre, $email){
     require('../datos/mailin.php');
-    $mailin = new Mailin("https://api.sendinblue.com/v2.0","SYz3MEcnpqsN2hA8");
+    $mailin = new Mailin("https://api.sendinblue.com/v2.0","Bpg5cNH9KwbCnL8Q");
     $data = array( "email" => "".$email."",
-        "attributes" => array(                
-            "NOMBRE"=>"".$nombre.""),                 
-        "listid" => array(50)
-    );        
+        "attributes" => array(
+            "NOMBRE"=>"".$nombre.""),
+        "listid" => array(4)
+    );
     echo json_encode($mailin->create_update_user($data));
 }
 
