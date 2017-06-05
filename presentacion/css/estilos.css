@@ -6,6 +6,24 @@
 	text-align: left;
 }
 
+.tituloGrupo{
+	text-align: left !important;
+}
+
+.centrado{
+	text-align: center;
+}
+
+.izq{
+	text-align: left;
+}
+
+
+.tablaVerificar{
+	height: 500px;
+	overflow-y: scroll;
+}
+
 body {
 	font-family:Arial;
 	background: url(../img/fondo.png) no-repeat center center fixed;

@@ -7,6 +7,8 @@ include_once('../datos/convocatoriaDAO.php');
 include_once('../datos/RegistroDAO.php');
 include_once("Solicitud.php");
 include_once('../datos/SolicitudDAO.php');
+include_once("Soporte.php");
+include_once('../datos/SoporteDAO.php');
 include_once("../presentacion/libs/class.upload.php");
 include_once("Registro.php");
 if($_POST){
@@ -22,6 +24,12 @@ if($_POST){
 		registrarse($_POST['registrarse']);
 	}elseif (isset($_POST['log'])) {
         verlog();
+	}elseif (isset($_POST['cargarDatosListadoInscritos'])) {
+        cargarDatosListadoInscritos();
+	}elseif (isset($_POST['cargarDatosverificarSoporte'])) {
+        cargarDatosverificarSoporte($_POST['cargarDatosverificarSoporte']);
+	}elseif (isset($_POST['verficarSoporte'])) {
+        verificarSoporte($_POST['datos']);
 	}elseif (isset($_POST['salir'])) {
         session_start();
         session_destroy();
@@ -72,12 +80,44 @@ function cargarDatos(){
 	$EstudianteDAO = new EstudianteDAO();
 	$rta=$EstudianteDAO->consultarEstudiante();
 	if ($rta["estado"]) {
-		$prueba=(array) $rta["estudiante"];
-		echo json_encode($prueba);
+		$array=(array) $rta["estudiante"];
+		echo json_encode($array);
 	}else {
 		echo $rta["mensaje"];
 	}
 }
+
+function cargarDatosListadoInscritos(){
+	$EstudianteDAO = new EstudianteDAO();
+	$rta=$EstudianteDAO->listarEstudiantesPendientes();
+	if ($rta["estado"]) {
+		$array=(array) $rta["estudiantes"];
+		echo json_encode($array);			
+	}else {
+		echo $rta["mensaje"];
+	}
+	
+}
+
+function cargarDatosverificarSoporte($codigo){	
+	$SoporteDAO = new SoporteDAO();
+	$rta=$SoporteDAO->consultarSoportes($codigo);
+	if ($rta["estado"]) {
+		$prueba=(array) $rta["soporte"];
+		echo json_encode($prueba);			
+	}else {
+		echo $rta["mensaje"];
+	}
+}
+
+function verificarSoporte($datos){
+	//aca ya toca guardarlo
+
+
+}
+
+
+
 function login($credenciales){
  /* parecido a recursos humanos*/
  		$log= new Login($credenciales["usuario"],$credenciales["pswd"]);

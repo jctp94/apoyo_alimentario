@@ -1,10 +1,10 @@
 <?php
 class Condicion {
     
-    private $K_IDCOND;
-    private $Q_PUNTAJECOND; //Tipo de dato: Number de longitud 3. No nulo. ej o.09
-    private $N_DESCCOND;
-    private $I_IDTIPOCOND;// Ingresos familiares: 1.   - Condiciones familiares: 2.    - Procedencia y lugar de residencia: 3.     - Condiciones de salud: 4.  Tipo de dato: Number de longitud 1, no nulo.
+    public $K_IDCOND;
+    public $Q_PUNTAJECOND; //Tipo de dato: Number de longitud 3. No nulo. ej o.09
+    public $N_DESCCOND;
+    public $I_IDTIPOCOND;// Ingresos familiares: 1.   - Condiciones familiares: 2.    - Procedencia y lugar de residencia: 3.     - Condiciones de salud: 4.  Tipo de dato: Number de longitud 1, no nulo.
 
     public function __construct($K_IDCOND, $Q_PUNTAJECOND, $N_DESCCOND, $I_IDTIPOCOND) { 
         $this->K_IDCOND=$K_IDCOND;
