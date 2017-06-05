@@ -262,23 +262,32 @@ $('#form-datos').submit(function(){
 	var formData = new FormData(document.getElementById("form-datos"));
 
 	console.log(formData);
+	var dias=[1,2,3];
 	$.ajax({
-					url: "../logica/dispatcher.php",
-					type: "POST",
-					data: formData,
-					contentType: false,
-			processData: false,
-			success: function(respuesta){
-				if (respuesta=="bien") {
-					swal("Solicitud enviada", "Le confirmaremos su estado pronto", "success");
-					//location.href='login.php';
-				}else{
-					swal("Error", respuesta, "error");
-				}
+		url: "../logica/dispatcher.php",
+		type: "POST",
+		data: formData,
+		contentType: false,
+		processData: false,
+		success: function(respuesta){
+			if (respuesta=="bien") {
+				swal("Solicitud enviada", "Le confirmaremos su estado pronto", "success");
+				$.ajax({
+					url  : "../logica/dispatcher.php",
+					type : "post",
+					data : {dia:dias},
+					success: function(respuesta){
+						console.log(respuesta);
+					}
+				});
+				//location.href='login.php';
+			}else{
+				swal("Error", respuesta, "error");
+			}
 		},
 		complete : function(xhr, status) {
-        //location.href='login.php';
-    }
+	        //location.href='login.php';
+	    }
 	});
 
 

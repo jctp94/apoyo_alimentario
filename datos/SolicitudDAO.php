@@ -45,7 +45,7 @@ include_once('../logica/Solicitud.php');
       				$pdf->process('../archivos/');
               $ruta="../archivos/".$_SESSION['usuario'].$docs[$i];
       				//echo 'El pdf ha sido subido correctamente';
-              $insertar="INSERT INTO SOPORTE VALUES (incremento_id_soporte.nextval,'".$ruta."', (SELECT N_DESCCOND FROM CONDICION WHERE K_IDCOND=".substr($docs[$i], -2)."), 'P', (SELECT Q_PUNTAJECOND FROM CONDICION WHERE K_IDCOND=".substr($docs[$i], -2)."),(SELECT K_IDSOL FROM SOLICITUD WHERE K_CODEST=(SELECT LTRIM(USER, 'U') FROM DUAL)) ,".substr($docs[$i], -2).")";
+              $insertar="INSERT INTO SOPORTE VALUES (incremento_id_soporte.nextval,'".$ruta."', (SELECT N_DESCCOND FROM CONDICION WHERE K_IDCOND=".substr($docs[$i], -2)."), 'P', NULL,(SELECT K_IDSOL FROM SOLICITUD WHERE K_CODEST=(SELECT LTRIM(USER, 'U') FROM DUAL)) ,".substr($docs[$i], -2).")";
               $stid = oci_parse($array["conexion"], $insertar);
               $r = @oci_execute($stid);
               if (!$r) {
@@ -73,6 +73,43 @@ include_once('../logica/Solicitud.php');
         return $rta;
       }
 
+    }
+    public function registrarDias($arregloDias)
+    {
+        session_start();
+        $conn = new Conexion($_SESSION['usuario'], $_SESSION['pswd']  );
+        $array=$conn->conectar();
+        if (!$array["estado"]) {
+          $error = array(
+              "estado" => false,
+              "mensaje" => $array['mensaje'],
+          );
+          return $error;
+      }else {
+          for ($i=0; $i <$arregloDias; $i++) {
+
+              $consulta="INSERT INTO solicitud_dia VALUES(incremento_k_idsoldia.nextval,
+                  (SELECT K_IDSOL FROM SOLICITUD WHERE K_CODEST=(SELECT LTRIM(USER, 'U') FROM DUAL)),".$arregloDias[$i].
+                                   ")";
+                                   
+              $stid = oci_parse($array["conexion"], $consulta);
+
+             $r = @oci_execute($stid);
+             if (!$r) {
+                 $e = oci_error($stid);  // Para errores de oci_execute, pase el gestor de sentencia
+                 $rta = array(
+                     "estado" => false,
+                     "mensaje" => $e['message'],
+                 );
+                 $conn->desconectar($array["conexion"]);
+                 return $rta;
+             }
+          }
+          $rta = array(
+              "estado" => true,
+              "mensaje" => "bien",
+          );
+      }
     }
   }
 

@@ -25,11 +25,19 @@ if($_POST){
 	}elseif (isset($_POST['salir'])) {
         session_start();
         session_destroy();
-    }
+    }elseif( isset($_POST['dia']) ){
+	  adjuntarDias($_POST['dia']);
+	}
+}
+function adjuntarDias($dias)
+{
+    $sol=new SolicitudDAO();
+	$rta=$sol->registrarDias($dias);
+    echo $rta["mensaje"];
 }
 if($_FILES){
 	$docs = array("doc11","doc12","doc13", "doc14", "doc21","doc22","doc23","doc24","doc31","doc32","doc33","doc34","doc41","doc42");
-  $sol=new SolicitudDAO();
+    $sol=new SolicitudDAO();
 	$rta=$sol->registrarSolicitud($docs);
 	echo $rta["mensaje"];
 
