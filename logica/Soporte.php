@@ -9,7 +9,8 @@ class Soporte {
     public $K_IDSOL;
     public $K_IDCOND;
 
-    public function __construct($O_DOCSOP,$N_VALORSOP,$K_IDCOND) {
+    public function __construct($K_IDSOP,$O_DOCSOP,$N_VALORSOP,$K_IDCOND) {
+        $this->K_IDSOP=$K_IDSOP;
         $this->O_DOCSOP=$O_DOCSOP;
         $this->N_VALORSOP=$N_VALORSOP;
         $this->K_IDCOND=$K_IDCOND;        

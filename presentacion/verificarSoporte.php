@@ -32,15 +32,13 @@
 						<tr>
 							<th class="centrado">NOMBRE COMPLETO</th>
 							<th class="centrado">CODIGO</th>
+							<th class="centrado">PROYECTO CURRICULAR</th>
+							<th class="centrado">FACULTAD</th>
 							<th class="centrado">VERIFICAR</th>
 						</tr>
 					</thead>
 					<tbody id="cuerpoLista">
-						<tr>
-							<td>Edgar Mauricio Parada Colmenares asdasdasd</td>
-							<td>20112020018</td>
-							<td style='text-align: center;'><button type='button' onclick='javascript:location.href="verificarSoporteEstudiante.php?estudiante=20112020048"' class='btnAgregar btn btn-success'><span class='glyphicon glyphicon-cloud-upload' aria-hidden='true'></span></button></td>
-						</tr>
+						
 					</tbody>
 				</table>
 				
@@ -85,96 +83,29 @@
 			success: function(respuesta){			
 				var datos=JSON.parse(respuesta);			
 				console.log(datos);
-				$.each(datos, function( index, soporte ) {
-					var grupo=soporte.K_IDCOND.substr(0,1);
-					var tipo=retornarTituloGrupo(grupo);	
-					var valor=soporte.N_VALORSOP;			
-					var rutaDocumento=soporte.O_DOCSOP;
-					var idCondicion=soporte.K_IDCOND;
-					construirItems(grupo,tipo,valor,rutaDocumento,idCondicion);			
+				$.each(datos, function( index, estudiante ) {					
+					construirItems(estudiante.K_CODEST,estudiante.N_NOMEST,estudiante.N_PROYECTOEST,estudiante.N_FACEST);			
 				});
 			}
 			
 		});
 	}
 
-	function construirItems(grupo, tipo,valor, rutaDocumento,idCondicion){
+	function construirItems(codigo, nombre, proyecto, facultad){
 		var html= `
 			<!--Inicio Grupo -->
-			<div class="form-group">				
-				<div class="col-md-7 col-xs-12 izq">
-					<label class="entrada form-control col-md-3 col-xs-12" for="">`+valor+`</label>
-				</div>
-				<div class="col-md-2 col-sm-6 col-xs-12">
-					<a  class="form-control col-md-7 col-xs-12" target="_blank" href="`+rutaDocumento+`.pdf">Ver Soporte</a>							
-				</div>
-				<div class="col-md-3 col-sm-6 col-xs-12">
-					<label for="">¿Válido?</label>
-					<label class="radio-inline"><input required type="radio" id="autorizacionSi" name="`+idCondicion+`" value='SI'>Si</label>
-					<label class="radio-inline"><input type="radio" id="autorizacionNo" name="`+idCondicion+`" value='NO' >No</label>
-				</div>
-			</div>
+			<tr>
+				<td>`+nombre+`</td>
+				<td>`+codigo+`</td>
+				<td>`+proyecto+`</td>
+				<td>`+facultad+`</td>
+				<td style='text-align: center;'><button type='button' onclick='javascript:location.href="verificarSoporteEstudiante.php?estudiante=`+codigo+`"' class='btnAgregar btn btn-success'><span class='glyphicon glyphicon-cloud-upload' aria-hidden='true'></span></button></td>
+			</tr>
 			<!--Fin Grupo -->
-		`;
-		$("#grupo"+grupo).css("display","block");
-		$("#grupo"+grupo).append(html);
+		`;		
+		$("#cuerpoLista").append(html);
 	}
 
-
-
-
-
-
-	$('#form-datos').submit(function(){
-		event.preventDefault();
-		//alert("enviando");
-		// Capturando datos
-		var datos = {},
-			form  = $(this).attr("id");
-		// input style="font-size:12px; background-color:#EFF0F0; border-radius: 0px; border:0px;"s text y select style="font-size:12px; background-color:#EFF0F0; border-radius: 0px; border:0px;"s
-		$("#"+form+" input:not([type=submit], [type=radio])").each(function(i){
-			var este 		= $(this),
-				idinput 	= este.attr("id"),
-				valorinput	= este.val();
-				if (este.val()!="") {
-					datos[idinput] = valorinput;
-		}
-		//capturando selects
-		$("#"+form+" select").each(function(i){
-			var este 		= $(this),
-				idinput 	= este.attr("id"),
-				valorinput	= este.children(":selected").attr("value");
-				if (valorinput!="") {
-					datos[idinput] = valorinput;
-				}
-		});
-
-	});
-
-	console.log(datos);
-
-	$.ajax({
-		url  : "../logica/dispatcher.php",
-		type : "post",
-		data : { convocatoria : datos},
-		beforeSend: function () {
-                $("#btn-enviar").val("Procesando, espere por favor...");
-        },
-		success: function(respuesta){
-			console.log("res"+respuesta);
-			if (respuesta=="bien") {
-				swal("Operación exitosa", "La convocatoria se ha creado", "success");
-				//location.href='crearSolicitud.php';
-			}else {
-				swal("Error",respuesta,"error")
-			}
-
-		}
-	});
-	return false;
-	});
-
 </script>
-
 </body>
 </html>

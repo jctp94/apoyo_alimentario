@@ -53,13 +53,12 @@ include_once('../logica/Estudiante.php');
         return $error;
       }else {
         $estudiantes=array();
-        $consulta = "select e.N_NOMEST, e.K_CODEST,$N_FACEST, e.N_PROYECTOEST from ESTUDIANTE e, SOLICITUD s where e.K_CODEST=s.K_CODEST and s.I_ESTADOSOL='P'";              
+        $consulta = "select e.K_CODEST, e.N_NOMEST, e.N_PROYECTOEST, e.N_FACEST from ESTUDIANTE e, SOLICITUD s where e.K_CODEST=s.K_CODEST and s.I_ESTADOSOL='P'";              
         $stid = oci_parse($array["conexion"], $consulta);
         oci_execute($stid);        
         while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {        
-          $estudiante = new Estudiante($row["N_NOMEST"],
-          $row["K_CODEST"],
-          $row["N_PROYECTOEST"]);
+          $estudiante = new Estudiante($row["K_CODEST"],
+            $row["N_NOMEST"],$row["N_PROYECTOEST"],NULL,NULL, $row["N_FACEST"], NULL, NULL, NULL );  
           array_push($estudiantes, $estudiante);
         }       
         $rta = array(

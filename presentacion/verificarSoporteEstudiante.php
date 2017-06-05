@@ -55,6 +55,8 @@
 						</div>
 					</div>
 
+					<input type="hidden" id="codigoEstudiante" value="<?php echo $_GET["estudiante"]?>" >
+
 					<button type="submit" class="botonSubmit">ENVIAR</button>
                     <button id="inicio" class="botonSubmit">INICIO</button>
 					<br><br>
@@ -118,14 +120,15 @@ function cargarDatos(){
 				var valor=soporte.N_VALORSOP;			
 				var rutaDocumento=soporte.O_DOCSOP;
 				var idCondicion=soporte.K_IDCOND;
-				construirItems(grupo,tipo,valor,rutaDocumento,idCondicion);			
+				var idSoporte=soporte.K_IDSOP;
+				construirItems(grupo,tipo,valor,rutaDocumento,idCondicion,idSoporte);			
 			});			
 		}
 		
 	});
 }
 
-function construirItems(grupo, tipo,valor, rutaDocumento,idCondicion){
+function construirItems(grupo, tipo,valor, rutaDocumento,idCondicion, idSoporte){
 	var html= `
 		<!--Inicio Grupo -->
 		<div class="form-group">				
@@ -137,8 +140,8 @@ function construirItems(grupo, tipo,valor, rutaDocumento,idCondicion){
 			</div>
 			<div class="col-md-3 col-sm-6 col-xs-12">
 				<label for="">¿Válido?</label>
-				<label class="radio-inline"><input required type="radio" id="autorizacionSi" name="`+idCondicion+`" value='SI'>Si</label>
-				<label class="radio-inline"><input type="radio" id="autorizacionNo" name="`+idCondicion+`" value='NO' >No</label>
+				<label class="radio-inline"><input required type="radio" id="autorizacionSi" name="`+idSoporte+`" value='SI'>Si</label>
+				<label class="radio-inline"><input type="radio" id="autorizacionNo" name="`+idSoporte+`" value='NO' >No</label>
 			</div>
 		</div>
 		<!--Fin Grupo -->
@@ -171,14 +174,20 @@ $('#form-datos').submit(function(){
 	event.preventDefault();
 	form  = $(this).attr("id");
 	datos={};
+
+	$("#"+form+" input:not([type=submit], [type=radio], [type=checkbox] )").each(function(i){
+		var este 		= $(this),
+			idinput 	= este.attr("id"),
+			valorinput	= este.val();
+			datos[idinput] = valorinput; 
+	});
 	
 	//capturando RADIO
 	$("input:checked").each(function(i){
 		var este 		= $(this),
 		idinput 	= este.attr("name"),
 		valorinput	= este.val();		
-		datos[idinput] = valorinput; 							
-		
+		datos[idinput] = valorinput; 
 	});	
 
 	console.log(datos);	
@@ -187,11 +196,11 @@ $('#form-datos').submit(function(){
 		url  : "../logica/dispatcher.php",
 		type : "post",
 		datatype : "json",
-		data : { verficarSoporte : datos},
+		data : { verficarSoporte : datos},	
 		success: function(respuesta){
 			if (respuesta=="bien") {
-				swal("Solicitud enviada", "Le confirmaremos su estado pronto", "success");
-				//location.href='login.php';
+				swal("Solicitud Verificada", "Estado de la Solicitud Guardada.", "success");
+				//location.href='verificarSoporte.php';
 			}else{
 				swal("Error", respuesta, "error");
 			}

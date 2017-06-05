@@ -29,7 +29,7 @@ if($_POST){
 	}elseif (isset($_POST['cargarDatosverificarSoporte'])) {
         cargarDatosverificarSoporte($_POST['cargarDatosverificarSoporte']);
 	}elseif (isset($_POST['verficarSoporte'])) {
-        verificarSoporte($_POST['datos']);
+        verificarSoporte($_POST['verficarSoporte']);
 	}elseif (isset($_POST['salir'])) {
         session_start();
         session_destroy();
@@ -111,9 +111,20 @@ function cargarDatosverificarSoporte($codigo){
 }
 
 function verificarSoporte($datos){
-	//aca ya toca guardarlo
+	$SolicitudDAO = new SolicitudDAO();
+	$rta=$SolicitudDAO->actualizarSolicitudRevisada($datos);
+	if ($rta["mensaje"]=="bien") {
+		//soportes actualizarlos
+		$SoporteDAO = new SoporteDAO();
+		$rta=$SoporteDAO->actualizarSoporteRevisado($datos);
+		echo $rta["mensaje"];			
+	}else{
+		echo $rta["mensaje"];	
+	}
+	
 
 
+	
 }
 
 
