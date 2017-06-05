@@ -21,7 +21,6 @@ class Estudiante {
      $this->I_ESTADOEST=$I_ESTADOEST;
      $this->V_PROMEST=$V_PROMEST;
      $this->Q_ASIGPERDEST=$Q_ASIGPERDEST;
-
    }
 
     public function getK_CODEST(){
