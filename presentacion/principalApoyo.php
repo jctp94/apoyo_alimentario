@@ -13,15 +13,15 @@
 <body>
 	<div class="contenedor">
 		<div style="margin:10px;" class="main row"></div>
-		<div class="main row">
+		<div class="main row col-md-4">
  			<div id="logo" align="center" style="text-align:center; max-width:800px; margin:0 auto;">
 				<img src="img/logoud.png" style="width:200px;"  />
 			</div>
 		</div>
-		<div style="margin:10px;" class="main row"></div>
-		<div class="main row">
+		
+		<div class="main row col-md-8">
 			<div class="col-xs-1 col-sm-2 col-md-3"></div>
-			<div id="textoTitulo" align="center" class="col-xs-10 col-sm-8 col-md-6">
+			<div id="textoTitulo" align="center" class="col-xs-10 col-sm-8 col-md-12">
 				BIENVENIDO AL PROGRAMA DE APOYO ALIMENTARIO
 			</div>
 		</div>

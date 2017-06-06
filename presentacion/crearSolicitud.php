@@ -7,7 +7,7 @@
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/estilos.css">
+	<link rel="stylesheet" href="css/estilos.css?v=2">
     <script src="dist/sweetalert.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="dist/sweetalert.css">
 <body>
@@ -150,7 +150,23 @@
 					    	</div>
 					    </div>
 					  </div>
-					<button type="submit" class="botonSubmit">ENVIAR</button>
+
+					  <div class="form-group">
+					    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Dias de la semana que necesita el apoyo<span class="required">*</span>
+					    </label>
+					     <div class="grupoInputs col-md-9 col-sm-6 col-xs-12">
+					    	<div class="row">
+					    		<div class="checkbox col-md-10">
+								  <label class="diasSemana"><input type="checkbox" class="dias" id="lunes" value="1">Lunes</label>
+								  <label class="diasSemana"><input type="checkbox" class="dias" id="martes" value="2">Martes</label>
+								  <label class="diasSemana"><input type="checkbox" class="dias" id="miercoles" value="3">Miercoles</label>
+								  <label class="diasSemana"><input type="checkbox" class="dias" id="jueves" value="4">Jueves</label>
+								  <label class="diasSemana"><input type="checkbox" class="dias" id="viernes" value="5">Viernes</label>
+								</div>								
+					    	</div>					    	
+					    </div>
+					  </div>	
+					<button id="btnEnviar" type="submit" class="botonSubmit">ENVIAR</button>
                     <button id="inicio" class="botonSubmit">INICIO</button>
 					<br><br>
 				</div>
@@ -166,13 +182,14 @@
 <script src="js/jquery.js"></script>
 <script>
 
+var contador=0;
 
 $(document).ready(function(){
 	verlog();
 	$("input[type='checkbox']").change(function() {
 		var id=this.getAttribute("id");
     	//alert(id);
-	    if(this.checked) {
+	    if(this.checked) {	    	
 	    	$("#div"+id).css("display","block");
 	    	$("#doc"+id).attr("required","true");
 	    }else{
@@ -180,13 +197,24 @@ $(document).ready(function(){
             $("#doc"+id).removeAttr("required");
 	    }
 	});
+	
+	//cuenta cuantos dias ha seleccionado
+	$("input[class='dias']").change(function() {
+		var id=this.getAttribute("id");
+    	//alert(id);
+	    if(this.checked) {
+	    	contador++;	    	
+	    }else{
+            contador--;
+	    }
+	});
+
     $("#inicio").click(function(){
         location.href='menu.php';
     });
 
 });
 function verlog(){
-
 	$.ajax({
 		url  : "../logica/dispatcher.php",
 		type : "post",
@@ -218,6 +246,22 @@ function cargarDatos(){
 		}
 	});
 }
+
+$('#btnEnviar').on('click', function(){		
+	var continuar = 1;
+	
+	//validar autorizacion
+	if(contador<1) {	    
+	    swal("Error!", "Debes seleccionar al menos 1 dia para recibir el apoyo alimentario.", "warning")
+		continuar = 0;
+		return false;
+	}
+
+	if(continuar == 1){
+		return true;								
+	}else return false;
+});
+
 $('#form-datos').submit(function(){
 	event.preventDefault();
 	form  = $(this).attr("id");
@@ -250,7 +294,7 @@ $('#form-datos').submit(function(){
 			}
 	});
 
-	$("#"+form+" input:not([type=submit], [type=radio])").each(function(i){
+	$("#"+form+" input:not([type=submit], [type=radio], [class='dias'])").each(function(i){
 		var este 		= $(this),
 			idinput 	= este.attr("id"),
 			valorinput	= este.val();
@@ -262,7 +306,21 @@ $('#form-datos').submit(function(){
 	var formData = new FormData(document.getElementById("form-datos"));
 
 	console.log(formData);
-	var dias=[1,2,3];
+
+	dias=[];
+	//ahora se capturan los dias
+	$("#"+form+" .dias").each(function(i){
+		var este 		= $(this),
+			idinput 	= este.attr("id"),
+			valorinput	= este.val();
+			if (este.is(':checked')) {
+				dias.push(valorinput);
+			}
+	});
+
+	console.log("dias: "+dias);
+
+	//var dias=[1,2,3];
 	$.ajax({
 		url: "../logica/dispatcher.php",
 		type: "POST",
