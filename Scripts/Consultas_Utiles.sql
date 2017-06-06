@@ -22,3 +22,18 @@ select username, granted_role
 
 --Usuarios de la base de datos
 SELECT USERNAME FROM DBA_USERS;
+
+SELECT q_tpuntajesol FROM solicitud ORDER BY q_tpuntajesol DESC;
+EXEC PK_APOYO_ALIMENTARIO.PR_CALCULAR_PUNTAJES(:NUM,:MNUM);
+EXEC PK_APOYO_ALIMENTARIO.PR_ASIGNAR_BENEFICIO(:NUM,:MNUM);
+SELECT * FROM BENEFICIARIO;
+@ /var/www/html/apoyo/Scripts/9_PK_APOYO_ALIMENTARIO.BOD.SQL
+
+
+-----------------------------------------------------
+delete from historicosolicitud;
+delete from soporte;
+delete from solicitud_dia;
+delete from solicitud;
+delete from cuposconvocatoria;
+delete from convocatoria;

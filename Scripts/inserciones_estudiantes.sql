@@ -1,0 +1,22 @@
+--Inserciones de nuevos estudiantes
+INSERT INTO ESTUDIANTE VALUES ('20112020049', 'Juan Torres', 'Ingenieria Industrial', 'Calle 25', 'juantorres@gmail.com', 'Ingenieria', 'A', 3.56, 0);
+INSERT INTO ESTUDIANTE VALUES ('20112020050', 'Juliana Parada', 'Ingenieria Catastral', 'Av Cali', 'julianaparada@gmail.com', 'Ingenieria', 'A', 4.02, 0);
+INSERT INTO ESTUDIANTE VALUES ('20121020051', 'Maria Garcia', 'Ingenieria Forestal', 'Av Dorado', 'mariagarcia@gmail.com', 'Ingenieria', 'A', 4.08, 0);
+INSERT INTO ESTUDIANTE VALUES ('20112020052', 'Fabio Espinel', 'Ingenieria Electrónica', 'Calle 124', 'fabioespinel@gmail.com', 'Ingenieria', 'A', 4.21, 0);
+INSERT INTO ESTUDIANTE VALUES ('20112020053', 'Viviana Hernandez', 'Ingenieria Eléctrica', 'Av 38', 'vivianahernandez@gmail.com', 'Ingenieria', 'A', 3.32, 0);
+INSERT INTO ESTUDIANTE VALUES ('20121020054', 'Ignacio Martinez', 'Ingenieria de Sistemas', 'Av Jimenez', 'ignaciomartinez@gmail.com', 'Ingenieria', 'A', 4.01, 0);
+INSERT INTO ESTUDIANTE VALUES ('20112020055', 'Susana Guevara', 'Licenciatura en Química', 'Calle 26', 'susanaguevara@gmail.com', 'Licenciatura', 'A', 4.45, 0);
+INSERT INTO ESTUDIANTE VALUES ('20112020056', 'Helen Buitrago', 'Licenciatura en Lengua Castellana', 'Av Suba', 'helenbuitrago@gmail.com', 'Licenciatura', 'A', 3.72, 0);
+INSERT INTO ESTUDIANTE VALUES ('20121020057', 'Santiago Quiroga', 'Licenciatura en Sociales', 'Av Esperanza', 'santiagoquiroga@gmail.com', 'Licenciatura', 'A', 4.21, 0);
+INSERT INTO ESTUDIANTE VALUES ('20112020058', 'Esteban Gaitan', 'Licenciatura en Humanidades', 'Calle 84', 'estebangaitan@gmail.com', 'Ingenieria', 'A', 4.74, 0);
+INSERT INTO ESTUDIANTE VALUES ('20112020059', 'Kevin Ardila', 'Artes Plásticas', 'Av Dorado', 'kevinardila@gmail.com', 'Artes', 'A', 3.98, 0);
+INSERT INTO ESTUDIANTE VALUES ('20121020060', 'Gabriela Ostos', 'Arte Danzario', 'Av Ciudad de Cali', 'gabrielaostos@gmail.com', 'Artes', 'A', 4.55, 0);
+INSERT INTO ESTUDIANTE VALUES ('20112020061', 'Tatiana Prada', 'Arte Escénicas', 'Calle 127', 'tatianaprada@gmail.com', 'Artes', 'A', 4.64, 0);
+INSERT INTO ESTUDIANTE VALUES ('20112020062', 'David Gomez', 'Artes Musicales', 'Av Suba', 'davidgomez@gmail.com', 'Artes', 'A', 4.25, 0);
+INSERT INTO ESTUDIANTE VALUES ('20121020063', 'Sergio Duran', 'Ingeniería Civil', 'Av Esperanza', 'sergioduran@gmail.com', 'Ingeniería', 'A', 3.99, 0);
+INSERT INTO ESTUDIANTE VALUES ('20112020064', 'Sara Garcia', 'Tecnología Industrial', 'Calle 45', 'saragarcia@gmail.com', 'Tecnología', 'A', 4.26, 0);
+INSERT INTO ESTUDIANTE VALUES ('20112020065', 'Luisa Torres', 'Tecnología Mecánica', 'Av Esperanza', 'luisatorres@gmail.com', 'Tecnología', 'A', 3.32, 0);
+INSERT INTO ESTUDIANTE VALUES ('20121020066', 'Jaime Barrios', 'Tecnología Electrónica', 'Av Soacha', 'jaimebarrios@gmail.com', 'Ingenieria', 'A', 4.15, 0);
+INSERT INTO ESTUDIANTE VALUES ('20112020067', 'Yenny Briñez', 'Ingeniería Ambiental', 'Calle 32', 'yennybrinez@gmail.com', 'Ingenieria', 'A', 3.98, 0);
+INSERT INTO ESTUDIANTE VALUES ('20112020068', 'Camilo Gonzalez', 'Ingenieria Forestal', 'Av Tintal', 'camilogonzalez@gmail.com', 'Ingenieria', 'A', 4.88, 0);
+INSERT INTO ESTUDIANTE VALUES ('20121020069', 'Estefanía Quiroga', 'Ingenieria Sanitaria', 'Av Jimenez', 'estefaniaquiroga@gmail.com', 'Ingenieria', 'A', 3.38, 0);

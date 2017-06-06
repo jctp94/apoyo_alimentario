@@ -78,12 +78,8 @@ AS
     AS
         CURSOR c_solicitud IS
         SELECT *
-        FROM solicitud ORDER BY q_tpuntajesol;
+        FROM solicitud ORDER BY q_tpuntajesol DESC;
 
-        CURSOR c_solicitud_dia(pk_idsol solicitud_dia.k_idsol%TYPE) IS
-        SELECT k_iddia
-        FROM Solicitud_Dia
-        WHERE k_idsol=pk_idsol;
         errorCuposSubTot EXCEPTION;
         errorCuposSubA EXCEPTION;
         errorCuposSubB EXCEPTION;
@@ -142,7 +138,6 @@ AS
                 --solo actualizar estado a rechazada
             END IF;
         END LOOP;
-        --commit;
     EXCEPTION
         WHEN errorBeneficiarioDiaSubTot THEN
             RAISE_APPLICATION_ERROR(-20004,'INSERTAR_BENEFICIARIO_DIA'||pm_error);
@@ -189,7 +184,7 @@ AS
                                WHERE k_idsol=r_solicitud.k_idsol AND i_estadosop='A')
             WHERE k_idsol=r_solicitud.k_idsol;
         END LOOP;
-        --COMMIT;
+
     EXCEPTION
         WHEN INVALID_CURSOR THEN
             pm_error:='Cursor invalido: '||SQLCODE;

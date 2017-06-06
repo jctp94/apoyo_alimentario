@@ -9,7 +9,9 @@ include_once('../logica/Soporte.php');
     }
 
     public function consultarSoportes($codigo){
-      session_start();
+      if(!isset($_SESSION)){
+        session_start();
+    }
       $conn = new Conexion($_SESSION['usuario'], $_SESSION['pswd']  );
       $array=$conn->conectar();
       if (!$array["estado"]) {
@@ -20,20 +22,20 @@ include_once('../logica/Soporte.php');
         return $error;
       }else {
         $soportes=array();
-        $consulta = "select s.K_IDSOP, s.O_DOCSOP, s.N_VALORSOP, s.K_IDCOND from soporte s, condicion c where c.K_IDCOND=s.K_IDCOND and s.K_IDSOL=(select s.K_IDSOL from solicitud s, estudiante e where s.K_CODEST=e.K_CODEST and e.K_CODEST=".$codigo.")"; 
-        //echo "sql: ". $sql;        
+        $consulta = "select s.K_IDSOP, s.O_DOCSOP, s.N_VALORSOP, s.K_IDCOND from soporte s, condicion c where c.K_IDCOND=s.K_IDCOND and s.K_IDSOL=(select s.K_IDSOL from solicitud s, estudiante e where s.K_CODEST=e.K_CODEST and e.K_CODEST=".$codigo.")";
+        //echo "sql: ". $sql;
         $stid = oci_parse($array["conexion"], $consulta);
         oci_execute($stid);
-        
-        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {        
+
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
           $sop = new Soporte($row["K_IDSOP"], $row["O_DOCSOP"],
           $row["N_VALORSOP"],
           $row["K_IDCOND"]);
           array_push($soportes, $sop);
-        }       
+        }
         $rta = array(
             "estado" => true,
-            "soporte" => $soportes,            
+            "soporte" => $soportes,
         );
         $conn->desconectar($array["conexion"]);
         return $rta;
@@ -41,15 +43,17 @@ include_once('../logica/Soporte.php');
     }
 
     function actualizarSoporteRevisado($datos){
-      session_start();
+      if(!isset($_SESSION)){
+        session_start();
+    }
       $codigo;
       $estado;
       $consulta;
       foreach ($datos as $key => $value) {
         if($key=="codigoEstudiante"){
-          $codigo=$value;  
-          unset($datos['codigoEstudiante']);                                          
-        }       
+          $codigo=$value;
+          unset($datos['codigoEstudiante']);
+        }
       }
 
       $conn = new Conexion($_SESSION['usuario'], $_SESSION['pswd']  );
@@ -60,15 +64,15 @@ include_once('../logica/Soporte.php');
             "mensaje" => $array['mensaje'],
         );
         return $error;
-      }else {        
-        foreach ($datos as $key => $value) {           
+      }else {
+        foreach ($datos as $key => $value) {
           if ($value=="SI") {
             $estado='A';
           }else{
             $estado='R';
           }
 
-          $consulta="UPDATE SOPORTE SET I_ESTADOSOP='".$estado."' WHERE K_IDSOP=".$key." AND  SOPORTE.K_IDSOL=(select s.K_IDSOL from solicitud s, estudiante e where s.K_CODEST=e.K_CODEST and e.K_CODEST=".$codigo.")";                    
+          $consulta="UPDATE SOPORTE SET I_ESTADOSOP='".$estado."' WHERE K_IDSOP=".$key." AND  SOPORTE.K_IDSOL=(select s.K_IDSOL from solicitud s, estudiante e where s.K_CODEST=e.K_CODEST and e.K_CODEST=".$codigo.")";
           $stid = oci_parse($array["conexion"], $consulta);
           $r = oci_execute($stid);
           if (!$r) {
@@ -84,13 +88,13 @@ include_once('../logica/Soporte.php');
       }
       $rta = array(
           "estado" => true,
-          "mensaje" => "bien",            
+          "mensaje" => "bien",
       );
       $conn->desconectar($array["conexion"]);
       return $rta;
     }
 
   }//FIN CLASS
-  
+
 
 ?>
