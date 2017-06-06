@@ -19,3 +19,15 @@ START WITH 1;
 CREATE SEQUENCE incremento_k_idsoldia
 INCREMENT BY 1
 START WITH 1;
+
+CREATE SEQUENCE incremento_id_his_solicitud
+INCREMENT BY 1
+START WITH 1;
+
+CREATE SEQUENCE incremento_k_id_benef
+INCREMENT BY 1
+START WITH 1;
+
+CREATE SEQUENCE incremento_k_idbenefdia
+INCREMENT BY 1
+START WITH 1;

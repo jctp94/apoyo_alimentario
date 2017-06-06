@@ -24,3 +24,6 @@ CREATE PUBLIC SYNONYM incremento_id_cuposconv FOR ADMINISTRADOR_DB.incremento_id
 CREATE PUBLIC SYNONYM incremento_id_solicitud FOR ADMINISTRADOR_DB.incremento_id_solicitud;
 CREATE PUBLIC SYNONYM incremento_id_soporte FOR ADMINISTRADOR_DB.incremento_id_soporte;
 CREATE PUBLIC SYNONYM incremento_k_idsoldia FOR ADMINISTRADOR_DB.incremento_k_idsoldia;
+CREATE PUBLIC SYNONYM incremento_id_his_solicitud FOR ADMINISTRADOR_DB.incremento_id_his_solicitud;
+CREATE PUBLIC SYNONYM incremento_k_id_benef FOR ADMINISTRADOR_DB.incremento_k_id_benef;
+CREATE PUBLIC SYNONYM incremento_k_idbenefdia FOR ADMINISTRADOR_DB.incremento_k_idbenefdia;

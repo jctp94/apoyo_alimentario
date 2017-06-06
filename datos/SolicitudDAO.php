@@ -6,7 +6,7 @@ include_once('../logica/Solicitud.php');
 
     public function __construct() {
     }
-    
+
     public function registrarSolicitud($docs){
       session_start();
       $conn = new Conexion($_SESSION['usuario'], $_SESSION['pswd']  );
@@ -74,7 +74,7 @@ include_once('../logica/Solicitud.php');
       }
 
     }
-<<<<<<< HEAD
+
     public function registrarDias($arregloDias)
     {
         session_start();
@@ -92,7 +92,7 @@ include_once('../logica/Solicitud.php');
               $consulta="INSERT INTO solicitud_dia VALUES(incremento_k_idsoldia.nextval,
                   (SELECT K_IDSOL FROM SOLICITUD WHERE K_CODEST=(SELECT LTRIM(USER, 'U') FROM DUAL)),".$arregloDias[$i].
                                    ")";
-                                   
+
               $stid = oci_parse($array["conexion"], $consulta);
 
              $r = @oci_execute($stid);
@@ -112,8 +112,6 @@ include_once('../logica/Solicitud.php');
           );
       }
     }
-=======
-
     function actualizarSolicitudRevisada($datos){
       session_start();
       $conn = new Conexion($_SESSION['usuario'], $_SESSION['pswd']  );
@@ -122,13 +120,13 @@ include_once('../logica/Solicitud.php');
       $codigo;
       foreach ($datos as $key => $value) {
         if($key=="codigoEstudiante"){
-          $codigo=$value;            
+          $codigo=$value;
         }
         if($value == "SI"){
-          $soportesAceptados=$soportesAceptados+1;                
+          $soportesAceptados=$soportesAceptados+1;
         }
       }
-      
+
       $array=$conn->conectar();
       if (!$array["estado"]) {
         $error = array(
@@ -136,17 +134,17 @@ include_once('../logica/Solicitud.php');
             "mensaje" => $array['mensaje'],
         );
         return $error;
-      }else {        
-        if ($soportesAceptados>=1) {    
-          //echo "ACEPTADA";    
-          $consulta = "UPDATE SOLICITUD SET I_ESTADOSOL='S' WHERE SOLICITUD.K_IDSOL=(select s.K_IDSOL from solicitud s, estudiante e where s.K_CODEST=e.K_CODEST and e.K_CODEST=".$codigo.")"; 
+      }else {
+        if ($soportesAceptados>=1) {
+          //echo "ACEPTADA";
+          $consulta = "UPDATE SOLICITUD SET I_ESTADOSOL='S' WHERE SOLICITUD.K_IDSOL=(select s.K_IDSOL from solicitud s, estudiante e where s.K_CODEST=e.K_CODEST and e.K_CODEST=".$codigo.")";
           $consulta2="INSERT INTO HISTORICOSOLICITUD(K_IDHIST, F_HIST, I_ESTADOHIST,N_DESCHIST, K_IDSOL, K_CEDADMIN) VALUES(incremento_id_his_solicitud.nextval,SYSDATE, 'S', '',(select s.K_IDSOL from solicitud s, estudiante e where s.K_CODEST=e.K_CODEST and e.K_CODEST=".$codigo."), LTRIM('".$_SESSION['usuario']."', 'U'))";
         }else{
           //echo "rechazada";
-          $consulta = "UPDATE SOLICITUD SET I_ESTADOSOL='R' WHERE SOLICITUD.K_IDSOL=(select s.K_IDSOL from solicitud s, estudiante e where s.K_CODEST=e.K_CODEST and e.K_CODEST=".$codigo.")"; 
+          $consulta = "UPDATE SOLICITUD SET I_ESTADOSOL='R' WHERE SOLICITUD.K_IDSOL=(select s.K_IDSOL from solicitud s, estudiante e where s.K_CODEST=e.K_CODEST and e.K_CODEST=".$codigo.")";
           $consulta2="INSERT INTO HISTORICOSOLICITUD(K_IDHIST, F_HIST, I_ESTADOHIST,N_DESCHIST, K_IDSOL, K_CEDADMIN) VALUES(incremento_id_his_solicitud.nextval,SYSDATE, 'R', 'Pienso que los documentos estan invalidos',(select s.K_IDSOL from solicitud s, estudiante e where s.K_CODEST=e.K_CODEST and e.K_CODEST=".$codigo."), LTRIM('".$_SESSION['usuario']."', 'U'))";
-        }       
-        
+        }
+
         $stid = oci_parse($array["conexion"], $consulta);
         $r = oci_execute($stid);
         if (!$r) {
@@ -173,38 +171,13 @@ include_once('../logica/Solicitud.php');
 
         $rta = array(
             "estado" => true,
-            "mensaje" => "bien",            
+            "mensaje" => "bien",
         );
         $conn->desconectar($array["conexion"]);
         return $rta;
       }
 
-
-
-
-
-
-
-
-
-
-
-
-      
-
-      
-
-
-
-
-
-
     }
-
-    
-
-
->>>>>>> origin/verificarsoporte
   }
 
 ?>
