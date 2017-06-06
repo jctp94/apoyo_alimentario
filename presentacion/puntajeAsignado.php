@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Verificar Soporte</title>
+    <title>Puntajes Asignados</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -18,14 +18,14 @@
 		<div class="main row">
 			<div class="col-xs-1 col-sm-2 col-md-2"></div>
 			<div id="textoTitulo" align="center" class="col-xs-10 col-sm-8 col-md-8">
-				Verificar Soporte
+				Puntajes Asignados
 			</div>
 		</div>
 		<div class="main row">
 			<div class="col-xs-1 col-sm-2 col-md-2"></div>
 			<div id="textoForm" align="center" style="font-size: 20px;" class="col-xs-10 col-sm-8 col-md-8 tablaVerificar">
 				<div style="height: 10px;"></div>
-				Listado de personas inscritas al apoyo alimentario
+				Puntajes asignados a las solicitudes con base en los soportes
 				<br><br>
 				<table class="table table-bordered centrado" >
 					<thead>
@@ -34,10 +34,10 @@
 							<th class="centrado">CODIGO</th>
 							<th class="centrado">PROYECTO CURRICULAR</th>
 							<th class="centrado">FACULTAD</th>
-							<th class="centrado">VERIFICAR</th>
+							<th class="centrado">PUNTAJE</th>
 						</tr>
 					</thead>
-					<tbody id="cuerpoLista">
+					<tbody id="cuerpoLista" style="color: black;">
 
 					</tbody>
 				</table>
@@ -68,8 +68,7 @@
 				if (respuesta!="si") {
 					location.href='principalApoyo.php';
 				}
-				console.log(String(respuesta));
-				console.log("hola");
+
 			}
 		});
 	}
@@ -79,19 +78,20 @@
 			url  : "../logica/dispatcher.php",
 			type : "post",
 			datatype : "json",
-			data : { cargarDatosListadoInscritos : "true"},
+			data : { calcularPuntaje : "true"},
 			success: function(respuesta){
+                console.log(respuesta+"siiiiiiiii");
 				var datos=JSON.parse(respuesta);
 				console.log(datos);
 				$.each(datos, function( index, estudiante ) {
-					construirItems(estudiante.K_CODEST,estudiante.N_NOMEST,estudiante.N_PROYECTOEST,estudiante.N_FACEST);			
+					construirItems(estudiante.K_CODEST,estudiante.N_NOMEST,estudiante.N_PROYECTOEST,estudiante.N_FACEST,estudiante.Q_ASIGPERDEST);
 				});
 			}
 
 		});
 	}
 
-	function construirItems(codigo, nombre, proyecto, facultad){
+	function construirItems(codigo, nombre, proyecto, facultad,puntaje){
 		var html= `
 			<!--Inicio Grupo -->
 			<tr>
@@ -99,7 +99,7 @@
 				<td>`+codigo+`</td>
 				<td>`+proyecto+`</td>
 				<td>`+facultad+`</td>
-				<td style='text-align: center;'><button type='button' onclick='javascript:location.href="verificarSoporteEstudiante.php?estudiante=`+codigo+`"' class='btnAgregar btn btn-success'><span class='glyphicon glyphicon-cloud-upload' aria-hidden='true'></span></button></td>
+				<td>`+puntaje+`</td>
 			</tr>
 			<!--Fin Grupo -->
 		`;

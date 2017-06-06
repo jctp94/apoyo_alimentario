@@ -42,7 +42,9 @@ include_once('../logica/Estudiante.php');
     }
 
     public function listarEstudiantesPendientes(){
-      session_start();
+        if(!isset($_SESSION)){
+          session_start();
+      }
       $conn = new Conexion($_SESSION['usuario'], $_SESSION['pswd']  );
       $array=$conn->conectar();
       if (!$array["estado"]) {
@@ -53,23 +55,52 @@ include_once('../logica/Estudiante.php');
         return $error;
       }else {
         $estudiantes=array();
-        $consulta = "select e.K_CODEST, e.N_NOMEST, e.N_PROYECTOEST, e.N_FACEST from ESTUDIANTE e, SOLICITUD s where e.K_CODEST=s.K_CODEST and s.I_ESTADOSOL='P'";              
+        $consulta = "select e.K_CODEST, e.N_NOMEST, e.N_PROYECTOEST, e.N_FACEST from ESTUDIANTE e, SOLICITUD s where e.K_CODEST=s.K_CODEST and s.I_ESTADOSOL='P'";
         $stid = oci_parse($array["conexion"], $consulta);
-        oci_execute($stid);        
-        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {        
+        oci_execute($stid);
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
           $estudiante = new Estudiante($row["K_CODEST"],
-            $row["N_NOMEST"],$row["N_PROYECTOEST"],NULL,NULL, $row["N_FACEST"], NULL, NULL, NULL );  
+            $row["N_NOMEST"],$row["N_PROYECTOEST"],NULL,NULL, $row["N_FACEST"], NULL, NULL, NULL );
           array_push($estudiantes, $estudiante);
-        }       
+        }
         $rta = array(
             "estado" => true,
-            "estudiantes" => $estudiantes,            
+            "estudiantes" => $estudiantes,
         );
         $conn->desconectar($array["conexion"]);
         return $rta;
       }
     }
-
+    public function listarEstudiantesPuntajes(){
+        if(!isset($_SESSION)){
+          session_start();
+      }
+      $conn = new Conexion($_SESSION['usuario'], $_SESSION['pswd']  );
+      $array=$conn->conectar();
+      if (!$array["estado"]) {
+        $error = array(
+            "estado" => false,
+            "mensaje" => $array['mensaje'],
+        );
+        return $error;
+      }else {
+        $estudiantes=array();
+        $consulta = "select e.K_CODEST, e.N_NOMEST, e.N_PROYECTOEST, e.N_FACEST,s.Q_TPUNTAJESOL from ESTUDIANTE e, SOLICITUD s where e.K_CODEST=s.K_CODEST ORDER BY s.Q_TPUNTAJESOL DESC";
+        $stid = oci_parse($array["conexion"], $consulta);
+        oci_execute($stid);
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+          $estudiante = new Estudiante($row["K_CODEST"],
+            $row["N_NOMEST"],$row["N_PROYECTOEST"],NULL,NULL, $row["N_FACEST"], NULL, NULL, $row["Q_TPUNTAJESOL"] );
+          array_push($estudiantes, $estudiante);
+        }
+        $rta = array(
+            "estado" => true,
+            "estudiantes" => $estudiantes,
+        );
+        $conn->desconectar($array["conexion"]);
+        return $rta;
+      }
+    }
     public function listarCodigos(){
       $conn = new Conexion('CREADOR_ESTUDIANTE','CREADOR_ESTUDIANTE');
       $array=$conn->conectar();
@@ -91,12 +122,12 @@ include_once('../logica/Estudiante.php');
         }
         $rta = array(
           "estado" => true,
-          "codigos" => $codigos,            
+          "codigos" => $codigos,
         );
         $conn->desconectar($array["conexion"]);
         return $rta;
       }
-      
+
 
 
     }

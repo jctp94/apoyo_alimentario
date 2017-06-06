@@ -65,10 +65,11 @@ ALTER TABLE  Convocatoria
  DROP CONSTRAINT CK_I_ESTADOCONV;
 
 ALTER TABLE  Convocatoria
- ADD CONSTRAINT CK_I_ESTADOCONV CHECK (I_ESTADOCONV in ('A','D','S','B','P','C'));
+ ADD CONSTRAINT CK_I_ESTADOCONV CHECK (I_ESTADOCONV in ('A','D','V','S','B','P','C'));
  /**
   * A abierta
   * D cancelada
+  * V validando soportes
   * S asignando puntaje
   * B asignando beneficio
   * P Pendiente por publicación

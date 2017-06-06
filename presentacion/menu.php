@@ -42,18 +42,30 @@
 						<form name="logueo" action="crearConvocatoria.php" method="POST" class="md-col-2">
 				        	<button type="submit" class="botonSubmit">CREAR CONVOCATORIA</button>
 						</form>
-					</div>											
+					</div>
 					<div class="col-md-2">
 						<form name="logueo" action="verificarSoporte.php" method="POST" class="md-col-3">
 				        	<button type="submit" class="botonSubmit">VERIFICAR SOPORTE</button>
 						</form>
-					</div>	
+					</div>
 					<div class="col-md-3">
 						<form name="logueo" action="retirarApoyo.php" method="POST" class="md-col-3">
 				        	<button type="submit" class="botonSubmit">RETIRAR APOYO A ESTUDIANTE</button>
 						</form>
-					</div>	
+					</div>
+
 				</div>
+                <div class="row">
+                    <hr>
+                </div>
+                <div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-2">
+						<form name="logueo" action="puntajeAsignado.php" method="POST" class="md-col-3">
+				        	<button type="submit" class="botonSubmit">CALCULAR PUNTAJE</button>
+						</form>
+					</div>
+                </div>
                 <div class="row">
                     <hr>
                 </div>
@@ -61,19 +73,19 @@
                     <div class="col-md-4"></div>
                     <div class="col-md-4">
                         <button id="salir" class="botonSubmit">Salir</button>
-					</div>	
+					</div>
                 </div>
 				<br>
 			</div>
 		</div>
 		<br>
- 		
+
 	</div>
 
 
 </body>
 </html>
-    
+
 <script src="js/jquery.js"></script>
 <script>
     $(document).ready(function(){
@@ -88,5 +100,5 @@
 			 }
 		    });
         });
-	});    
+	});
 </script>

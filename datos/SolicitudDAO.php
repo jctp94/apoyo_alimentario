@@ -144,7 +144,6 @@ include_once('../logica/Solicitud.php');
           $consulta = "UPDATE SOLICITUD SET I_ESTADOSOL='R' WHERE SOLICITUD.K_IDSOL=(select s.K_IDSOL from solicitud s, estudiante e where s.K_CODEST=e.K_CODEST and e.K_CODEST=".$codigo.")";
           $consulta2="INSERT INTO HISTORICOSOLICITUD(K_IDHIST, F_HIST, I_ESTADOHIST,N_DESCHIST, K_IDSOL, K_CEDADMIN) VALUES(incremento_id_his_solicitud.nextval,SYSDATE, 'R', 'Documentos Invalidos',(select s.K_IDSOL from solicitud s, estudiante e where s.K_CODEST=e.K_CODEST and e.K_CODEST=".$codigo."), LTRIM('".$_SESSION['usuario']."', 'U'))";
         }
-
         $stid = oci_parse($array["conexion"], $consulta);
         $r = oci_execute($stid);
         if (!$r) {
@@ -178,6 +177,42 @@ include_once('../logica/Solicitud.php');
       }
 
     }
+    public function calcularPuntaje(){
+      session_start();
+      $conn = new Conexion($_SESSION['usuario'], $_SESSION['pswd']  );
+      $array=$conn->conectar();
+      if (!$array["estado"]) {
+        $error = array(
+            "estado" => false,
+            "mensaje" => $array['mensaje'],
+        );
+        return $error;
+      }else {
+            $p1;
+            $p2;
+            $stid = oci_parse($array["conexion"], 'begin PK_APOYO_ALIMENTARIO.PR_CALCULAR_PUNTAJES(:p1,:p2); end;');
+            oci_bind_by_name($stid, ':p1', $p1);
+            oci_bind_by_name($stid, ':p2', $p2, 100);
+            $r = @oci_execute($stid);
+            if (!$r) {
+                $e = oci_error($stid);  // Para errores de oci_execute, pase el gestor de sentencia
+                $rta = array(
+                    "estado" => false,
+                    "mensaje" => $e['message'],
+                );
+                $conn->desconectar($array["conexion"]);
+                return $rta;
+            }
+            $rta = array(
+                "estado" => true,
+                "mensaje" => "bien",
+            );
+            $conn->desconectar($array["conexion"]);
+            return $rta;
+        }
+
+    }
+
   }
 
 ?>

@@ -37,15 +37,31 @@ if($_POST){
         retirarApoyo($_POST['retirarApoyo']);
 	}elseif (isset($_POST['cargarListaCodigos'])) {
         cargarListaCodigos();
-	}
-
-
-	elseif (isset($_POST['salir'])) {
+	}elseif (isset($_POST['calcularPuntaje'])) {
+        calcularPuntaje();
+	}elseif (isset($_POST['salir'])) {
         session_start();
         session_destroy();
     }elseif( isset($_POST['dia']) ){
 	  adjuntarDias($_POST['dia']);
 	}
+}
+function calcularPuntaje()
+{
+    $sol=new SolicitudDAO();
+	$rta=$sol->calcularPuntaje();
+    if ($rta["estado"]) {
+        $EstudianteDAO = new EstudianteDAO();
+    	$rta=$EstudianteDAO->listarEstudiantesPuntajes();
+    	if ($rta["estado"]) {
+    		$array=(array) $rta["estudiantes"];
+    		echo json_encode($array);
+    	}else {
+    		echo $rta["mensaje"];
+    	}
+    }
+
+
 }
 function adjuntarDias($dias)
 {
@@ -123,19 +139,19 @@ function cargarDatosListadoInscritos(){
 	$rta=$EstudianteDAO->listarEstudiantesPendientes();
 	if ($rta["estado"]) {
 		$array=(array) $rta["estudiantes"];
-		echo json_encode($array);			
+		echo json_encode($array);
 	}else {
 		echo $rta["mensaje"];
 	}
-	
+
 }
 
-function cargarDatosverificarSoporte($codigo){	
+function cargarDatosverificarSoporte($codigo){
 	$SoporteDAO = new SoporteDAO();
 	$rta=$SoporteDAO->consultarSoportes($codigo);
 	if ($rta["estado"]) {
 		$prueba=(array) $rta["soporte"];
-		echo json_encode($prueba);			
+		echo json_encode($prueba);
 	}else {
 		echo $rta["mensaje"];
 	}
@@ -148,29 +164,29 @@ function verificarSoporte($datos){
 		//soportes actualizarlos
 		$SoporteDAO = new SoporteDAO();
 		$rta=$SoporteDAO->actualizarSoporteRevisado($datos);
-		echo $rta["mensaje"];			
+		echo $rta["mensaje"];
 	}else{
-		echo $rta["mensaje"];	
-	}	
+		echo $rta["mensaje"];
+	}
 }
 
-function cargarDatosConvocatoria(){	
+function cargarDatosConvocatoria(){
 	$ConvocatoriaDAO = new ConvocatoriaDAO();
 	$rta=$ConvocatoriaDAO->consultarConvocatoriaActiva();
 	if ($rta["estado"]) {
 		$array=(array) $rta["convocatoria"];
-		echo json_encode($array);			
+		echo json_encode($array);
 	}else {
 		echo $rta["mensaje"];
 	}
 }
 
-function cargarListaCodigos(){	
+function cargarListaCodigos(){
 	$EstudianteDAO = new EstudianteDAO();
 	$rta=$EstudianteDAO->listarCodigos();
 	if ($rta["estado"]) {
 		$array=(array) $rta["codigos"];
-		echo json_encode($array);			
+		echo json_encode($array);
 	}else {
 		echo $rta["mensaje"];
 	}
@@ -178,12 +194,12 @@ function cargarListaCodigos(){
 
 
 
-function retirarApoyo($codigo){	
+function retirarApoyo($codigo){
 	//cambio de estado
 	$BeneficiarioDAO = new BeneficiarioDAO();
 	$rta=$BeneficiarioDAO->retirarApoyo($codigo);
 	echo $rta["mensaje"];
-	
+
 }
 
 

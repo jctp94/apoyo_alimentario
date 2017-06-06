@@ -12,7 +12,7 @@ CREATE TABLE Auditoria
 	N_RESPAUDI VARCHAR2(50) NOT NULL,      -- Responsable de la acción realizada
     F_AUDI DATE NOT NULL,                  -- Fecha del sistema en el momento en el que se realizó la acción
     N_VALORANTERIOR VARCHAR2(50), -- Valor antes de modificar
-    N_VALORNUEVO VARCHAR2(50) NOT NULL     -- Valor modificado
+    N_VALORNUEVO VARCHAR2(50) -- Valor modificado
 )
 ;
 

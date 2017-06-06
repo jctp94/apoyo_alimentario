@@ -184,7 +184,7 @@ AS
                                WHERE k_idsol=r_solicitud.k_idsol AND i_estadosop='A')
             WHERE k_idsol=r_solicitud.k_idsol;
         END LOOP;
-
+        COMMIT;
     EXCEPTION
         WHEN INVALID_CURSOR THEN
             pm_error:='Cursor invalido: '||SQLCODE;
