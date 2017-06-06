@@ -1,3 +1,7 @@
+.diasSemana{
+	margin-right: 15px !important;
+}
+
 #infoEstudiante{
 	text-align: left;
 }
@@ -17,6 +21,8 @@
 .izq{
 	text-align: left;
 }
+
+
 
 
 .tablaVerificar{
