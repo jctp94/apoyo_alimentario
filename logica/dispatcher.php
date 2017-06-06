@@ -9,6 +9,7 @@ include_once("Solicitud.php");
 include_once('../datos/SolicitudDAO.php');
 include_once("Soporte.php");
 include_once('../datos/SoporteDAO.php');
+include_once('../datos/BeneficiarioDAO.php');
 include_once("../presentacion/libs/class.upload.php");
 include_once("Registro.php");
 if($_POST){
@@ -30,7 +31,16 @@ if($_POST){
         cargarDatosverificarSoporte($_POST['cargarDatosverificarSoporte']);
 	}elseif (isset($_POST['verficarSoporte'])) {
         verificarSoporte($_POST['verficarSoporte']);
-	}elseif (isset($_POST['salir'])) {
+	}elseif (isset($_POST['cargarDatosConvocatoria'])) {
+        cargarDatosConvocatoria();
+	}elseif (isset($_POST['retirarApoyo'])) {
+        retirarApoyo($_POST['retirarApoyo']);
+	}elseif (isset($_POST['cargarListaCodigos'])) {
+        cargarListaCodigos();
+	}
+
+
+	elseif (isset($_POST['salir'])) {
         session_start();
         session_destroy();
     }elseif( isset($_POST['dia']) ){
@@ -51,15 +61,28 @@ if($_FILES){
 
 }
 
-//insertSendinBlue("Nombre", "correo");
-//
-function insertSendinBlue($nombre, $email){
+//bienvenidoSendinBlue("Nombre", "correo");
+//ESTE ES PARA BIENVENIDO
+function bienvenidoSendinBlue($nombre, $email){
     require('../datos/mailin.php');
-    $mailin = new Mailin("https://api.sendinblue.com/v2.0","Bpg5cNH9KwbCnL8Q");
+    $mailin = new Mailin("https://api.sendinblue.com/v2.0","SYz3MEcnpqsN2hA8");
     $data = array( "email" => "".$email."",
         "attributes" => array(
             "NOMBRE"=>"".$nombre.""),
-        "listid" => array(4)
+        "listid" => array(50)
+    );
+    echo json_encode($mailin->create_update_user($data));
+}
+
+//beneficiarioSendinBlue("Nombre", "correo");
+//ESTE ES PARA BENEFICIARIOS
+function beneficiarioSendinBlue($nombre, $email){
+    require('../datos/mailin.php');
+    $mailin = new Mailin("https://api.sendinblue.com/v2.0","SYz3MEcnpqsN2hA8");
+    $data = array( "email" => "".$email."",
+        "attributes" => array(
+            "NOMBRE"=>"".$nombre.""),
+        "listid" => array(51)
     );
     echo json_encode($mailin->create_update_user($data));
 }
@@ -128,10 +151,38 @@ function verificarSoporte($datos){
 		echo $rta["mensaje"];			
 	}else{
 		echo $rta["mensaje"];	
+	}	
+}
+
+function cargarDatosConvocatoria(){	
+	$ConvocatoriaDAO = new ConvocatoriaDAO();
+	$rta=$ConvocatoriaDAO->consultarConvocatoriaActiva();
+	if ($rta["estado"]) {
+		$array=(array) $rta["convocatoria"];
+		echo json_encode($array);			
+	}else {
+		echo $rta["mensaje"];
 	}
-	
+}
+
+function cargarListaCodigos(){	
+	$EstudianteDAO = new EstudianteDAO();
+	$rta=$EstudianteDAO->listarCodigos();
+	if ($rta["estado"]) {
+		$array=(array) $rta["codigos"];
+		echo json_encode($array);			
+	}else {
+		echo $rta["mensaje"];
+	}
+}
 
 
+
+function retirarApoyo($codigo){	
+	//cambio de estado
+	$BeneficiarioDAO = new BeneficiarioDAO();
+	$rta=$BeneficiarioDAO->retirarApoyo($codigo);
+	echo $rta["mensaje"];
 	
 }
 

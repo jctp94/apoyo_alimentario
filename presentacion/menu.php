@@ -20,32 +20,37 @@
 		</div>
 		<div style="margin:10px;" class="main row"></div>
 		<div class="main row">
-			<div class="col-xs-1 col-sm-2 col-md-2"></div>
-			<div id="textoTitulo" align="center" class="col-xs-10 col-sm-8 col-md-8">
+			<div class="col-xs-1 col-sm-2 col-md-1"></div>
+			<div id="textoTitulo" align="center" class="col-xs-10 col-sm-8 col-md-10">
 				BIENVENIDO AL PROGRAMA DE APOYO ALIMENTARIO
 			</div>
 		</div>
 		<div class="main row">
-			<div class="col-xs-1 col-sm-2 col-md-2"></div>
-			<div id="textoForm" align="center" style="font-size: 20px;" class="col-xs-10 col-sm-8 col-md-8">
+			<div class="col-xs-1 col-sm-2 col-md-1"></div>
+			<div id="textoForm" align="center" style="font-size: 20px;" class="col-xs-10 col-sm-8 col-md-10">
 				<div style="height: 10px;"></div>
 				ELIGE UNA DE LAS OPCIONES:
 				<br><br>
 				<div class="row">
 					<div class="col-md-1"></div>
-					<div class="col-md-3">
-						<form name="logueo" action="crearSolicitud.php" method="POST" class="md-col-3" >
+					<div class="col-md-2">
+						<form name="logueo" action="crearSolicitud.php" method="POST" class="md-col-2" >
 							<button type="submit" class="botonSubmit">SOLICITAR APOYO</button>
 						</form>
 					</div>
 					<div class="col-md-3">
-						<form name="logueo" action="crearConvocatoria.php" method="POST" class="md-col-3">
+						<form name="logueo" action="crearConvocatoria.php" method="POST" class="md-col-2">
 				        	<button type="submit" class="botonSubmit">CREAR CONVOCATORIA</button>
+						</form>
+					</div>											
+					<div class="col-md-2">
+						<form name="logueo" action="verificarSoporte.php" method="POST" class="md-col-3">
+				        	<button type="submit" class="botonSubmit">VERIFICAR SOPORTE</button>
 						</form>
 					</div>	
 					<div class="col-md-3">
-						<form name="logueo" action="verificarSoporte.php" method="POST" class="md-col-3">
-				        	<button type="submit" class="botonSubmit">VERIFICAR SOPORTE</button>
+						<form name="logueo" action="retirarApoyo.php" method="POST" class="md-col-3">
+				        	<button type="submit" class="botonSubmit">RETIRAR APOYO A ESTUDIANTE</button>
 						</form>
 					</div>	
 				</div>

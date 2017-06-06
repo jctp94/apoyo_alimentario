@@ -92,6 +92,36 @@ include_once('../logica/Convocatoria.php');
       }
 
     }
+
+
+    public function consultarConvocatoriaActiva(){
+      session_start();
+      $conn = new Conexion("CREADOR_ESTUDIANTE","CREADOR_ESTUDIANTE"  );
+      $array=$conn->conectar();
+      if (!$array["estado"]) {
+        $error = array(
+            "estado" => false,
+            "mensaje" => $array['mensaje'],
+        );
+        return $error;
+      }else {
+        $consulta = "SELECT F_INICONV, F_FINCONV, V_COSTOALMUERZO FROM CONVOCATORIA WHERE I_ESTADOCONV='A'"; 
+        //echo "sql: ". $sql;        
+        $stid = oci_parse($array["conexion"], $consulta);
+        oci_execute($stid);
+        $row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
+        $sop = new Convocatoria($row["F_INICONV"], $row["F_FINCONV"],$row["V_COSTOALMUERZO"],NULL, NULL, NULL);          
+
+        $rta = array(
+            "estado" => true,
+            "convocatoria" => $sop,            
+        );
+        $conn->desconectar($array["conexion"]);
+        return $rta;
+      }
+    }
+
+
  }
 
 
