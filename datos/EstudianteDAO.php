@@ -71,7 +71,8 @@ include_once('../logica/Estudiante.php');
     }
 
     public function listarCodigos(){
-      $conn = new Conexion('CREADOR_ESTUDIANTE','CREADOR_ESTUDIANTE');
+      session_start();
+      $conn = new Conexion($_SESSION['usuario'], $_SESSION['pswd']);
       $array=$conn->conectar();
       if (!$array["estado"]) {
         $error = array(
@@ -96,10 +97,129 @@ include_once('../logica/Estudiante.php');
         $conn->desconectar($array["conexion"]);
         return $rta;
       }
-      
-
-
     }
+
+    public function listarFacultades(){
+      session_start();
+      $conn = new Conexion($_SESSION['usuario'], $_SESSION['pswd']  );
+      $array=$conn->conectar();
+      if (!$array["estado"]) {
+        $error = array(
+            "estado" => "noConexion",
+            "mensaje" => $array['mensaje'],
+        );
+        return $error;
+      }else {
+        $sql="SELECT DISTINCT(N_FACEST) FROM ESTUDIANTE";
+        $stid = oci_parse($array["conexion"], $sql);
+        oci_execute($stid);
+        $lista= array();
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            foreach ($row as $key=>$value ) {
+                 array_push($lista,$value);
+            }
+        }
+        $rta = array(
+          "estado" => true,
+          "lista" => $lista,            
+        );
+        $conn->desconectar($array["conexion"]);
+        return $rta;
+      }
+    }
+
+    public function listarProyectosCurriculares(){
+      session_start();
+      $conn = new Conexion($_SESSION['usuario'], $_SESSION['pswd']  );
+      $array=$conn->conectar();
+      if (!$array["estado"]) {
+        $error = array(
+            "estado" => "noConexion",
+            "mensaje" => $array['mensaje'],
+        );
+        return $error;
+      }else {
+        $sql="SELECT DISTINCT(N_PROYECTOEST) FROM ESTUDIANTE";        
+        $stid = oci_parse($array["conexion"], $sql);
+        oci_execute($stid);
+        $lista= array();
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            foreach ($row as $key=>$value ) {
+                 array_push($lista,$value);
+            }
+        }
+        $rta = array(
+          "estado" => true,
+          "lista" => $lista,            
+        );
+        $conn->desconectar($array["conexion"]);
+        return $rta;
+      }
+    }
+
+    public function filtrarPorFacultad($facultad){
+      session_start();
+      $conn = new Conexion($_SESSION['usuario'], $_SESSION['pswd']  );
+      $array=$conn->conectar();
+      if (!$array["estado"]) {
+        $error = array(
+            "estado" => "noConexion",
+            "mensaje" => $array['mensaje'],
+        );
+        return $error;
+      }else {
+        $estudiantes= array();
+        $sql="SELECT e.K_CODEST, e.N_NOMEST, e.N_PROYECTOEST,e.N_FACEST, s.I_ESTADOSOL FROM ESTUDIANTE e, SOLICITUD s 
+        WHERE s.K_CODEST=e.K_CODEST and e.N_FACEST='".$facultad."'";        
+        $stid = oci_parse($array["conexion"], $sql);
+        oci_execute($stid);
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {        
+          $estudiante = new Estudiante($row["K_CODEST"],
+            $row["N_NOMEST"],$row["N_PROYECTOEST"],$row["I_ESTADOSOL"],NULL, $row["N_FACEST"], NULL, NULL, NULL );  
+          array_push($estudiantes, $estudiante);
+        }  
+        $rta = array(
+          "estado" => true,
+          "estudiantes" => $estudiantes,            
+        );
+        $conn->desconectar($array["conexion"]);
+        return $rta;
+      }
+    }
+
+    public function filtrarPorProyectoCurricular($proyectoCurricular){
+      session_start();
+      $conn = new Conexion($_SESSION['usuario'], $_SESSION['pswd']  );
+      $array=$conn->conectar();
+      if (!$array["estado"]) {
+        $error = array(
+            "estado" => "noConexion",
+            "mensaje" => $array['mensaje'],
+        );
+        return $error;
+      }else {
+        $estudiantes= array();
+        $sql="SELECT e.K_CODEST, e.N_NOMEST, e.N_PROYECTOEST,e.N_FACEST, s.I_ESTADOSOL FROM ESTUDIANTE e, SOLICITUD s 
+        WHERE s.K_CODEST=e.K_CODEST and e.N_PROYECTOEST='".$proyectoCurricular."'";
+        $stid = oci_parse($array["conexion"], $sql);
+        oci_execute($stid);
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {        
+          $estudiante = new Estudiante($row["K_CODEST"],
+            $row["N_NOMEST"],$row["N_PROYECTOEST"],$row["I_ESTADOSOL"],NULL, $row["N_FACEST"], NULL, NULL, NULL );  
+          array_push($estudiantes, $estudiante);
+        }  
+        $rta = array(
+          "estado" => true,
+          "estudiantes" => $estudiantes,            
+        );
+        $conn->desconectar($array["conexion"]);
+        return $rta;
+      }
+    }
+
+
+
+  
 
 
 

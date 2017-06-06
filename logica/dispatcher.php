@@ -37,10 +37,13 @@ if($_POST){
         retirarApoyo($_POST['retirarApoyo']);
 	}elseif (isset($_POST['cargarListaCodigos'])) {
         cargarListaCodigos();
-	}
-
-
-	elseif (isset($_POST['salir'])) {
+	}elseif (isset($_POST['cargarDatosFacultades'])) {
+        cargarListaFacultades();
+	}elseif (isset($_POST['cargarDatosProyectosCurriculares'])) {
+        cargarListaProyectosCurriculares();
+	}elseif (isset($_POST['filtrar'])) {
+        filtrar($_POST['filtrar'],$_POST['valor']);
+	}elseif (isset($_POST['salir'])) {
         session_start();
         session_destroy();
     }elseif( isset($_POST['dia']) ){
@@ -95,6 +98,24 @@ function verlog(){
     echo "si";
   }
 }
+
+function filtrar($tipo, $valor){
+	$EstudianteDAO = new EstudianteDAO();
+	if ($tipo=="facultad") {
+		$rta=$EstudianteDAO->filtrarPorFacultad($valor);	
+	}else if ($tipo=="proyectoCurricular") {
+		$rta=$EstudianteDAO->filtrarPorProyectoCurricular($valor);
+	}	
+	if ($rta["estado"]) {
+		$array=(array) $rta["estudiantes"];
+		echo json_encode($array);
+	}else {
+		echo $rta["mensaje"];
+	}
+}
+
+
+
 function registrarse($credenciales){
 	$registro = new Registro($credenciales['codigo'],$credenciales['pswd'],"estudiante");
 	$registroDAO = new registroDAO();
@@ -170,6 +191,28 @@ function cargarListaCodigos(){
 	$rta=$EstudianteDAO->listarCodigos();
 	if ($rta["estado"]) {
 		$array=(array) $rta["codigos"];
+		echo json_encode($array);			
+	}else {
+		echo $rta["mensaje"];
+	}
+}
+
+function cargarListaFacultades(){	
+	$EstudianteDAO = new EstudianteDAO();
+	$rta=$EstudianteDAO->listarFacultades();
+	if ($rta["estado"]) {
+		$array=(array) $rta["lista"];
+		echo json_encode($array);			
+	}else {
+		echo $rta["mensaje"];
+	}
+}
+
+function cargarListaProyectosCurriculares(){	
+	$EstudianteDAO = new EstudianteDAO();
+	$rta=$EstudianteDAO->listarProyectosCurriculares();
+	if ($rta["estado"]) {
+		$array=(array) $rta["lista"];
 		echo json_encode($array);			
 	}else {
 		echo $rta["mensaje"];
