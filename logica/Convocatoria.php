@@ -1,15 +1,15 @@
 <?php
 class Convocatoria {
 
-    private $F_INICONV;
-    private $F_FINCONV;
-    private $F_CREACIONCONV;
-    private $V_COSTOALMUERZO;
-    private $Q_CUPOSDISP;
-    private $I_ESTADOCONV;
-    private $K_CEDADMIN;
-    private $K_IDPERACAD;
-    private $K_IDANIOCONV;
+    public $F_INICONV;
+    public $F_FINCONV;
+    public $F_CREACIONCONV;
+    public $V_COSTOALMUERZO;
+    public $Q_CUPOSDISP;
+    public $I_ESTADOCONV;
+    public $K_CEDADMIN;
+    public $K_IDPERACAD;
+    public $K_IDANIOCONV;
 
     public function __construct($F_INICONV, $F_FINCONV, $V_COSTOALMUERZO, $Q_CUPOSDISP,$I_ESTADOCONV,$K_IDANIOCONV) {
         $this->F_INICONV=$F_INICONV;

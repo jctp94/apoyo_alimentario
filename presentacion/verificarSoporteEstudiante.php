@@ -199,8 +199,19 @@ $('#form-datos').submit(function(){
 		data : { verficarSoporte : datos},	
 		success: function(respuesta){
 			if (respuesta=="bien") {
-				swal("Solicitud Verificada", "Estado de la Solicitud Guardada.", "success");
+				swal("", "Estado de la Solicitud Guardada.", "success");
 				//location.href='verificarSoporte.php';
+				swal({   title: "Solicitud Verificada",   
+					text: "Se han guardado todos los cambios hechos para esta solicitud",   
+					type: "success",   
+					showCancelButton: false,   
+					closeOnConfirm: false,   
+					showLoaderOnConfirm: true, 
+				}, function(){   
+					setTimeout(function(){     
+						document.location.href='menu.php';   
+					}, 1000); 
+				});	
 			}else{
 				swal("Error", respuesta, "error");
 			}

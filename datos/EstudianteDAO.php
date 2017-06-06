@@ -69,6 +69,41 @@ include_once('../logica/Estudiante.php');
         return $rta;
       }
     }
+
+    public function listarCodigos(){
+      $conn = new Conexion('CREADOR_ESTUDIANTE','CREADOR_ESTUDIANTE');
+      $array=$conn->conectar();
+      if (!$array["estado"]) {
+        $error = array(
+            "estado" => "noConexion",
+            "mensaje" => $array['mensaje'],
+        );
+        return $error;
+      }else {
+        $sql="SELECT s.K_CODEST FROM SOLICITUD s, BENEFICIARIO b WHERE b.K_IDSOL=s.K_IDSOL AND  b.I_ESTADOBENEF='A' AND s.K_IDSOL=(select s.K_IDSOL from solicitud s, estudiante e where s.K_CODEST=e.K_CODEST)";
+        $stid = oci_parse($array["conexion"], $sql);
+        oci_execute($stid);
+        $codigos= array();
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            foreach ($row as $key=>$value ) {
+                 array_push($codigos,$value);
+            }
+        }
+        $rta = array(
+          "estado" => true,
+          "codigos" => $codigos,            
+        );
+        $conn->desconectar($array["conexion"]);
+        return $rta;
+      }
+      
+
+
+    }
+
+
+
+
   }
 
 ?>

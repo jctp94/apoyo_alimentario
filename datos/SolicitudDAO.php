@@ -142,7 +142,7 @@ include_once('../logica/Solicitud.php');
         }else{
           //echo "rechazada";
           $consulta = "UPDATE SOLICITUD SET I_ESTADOSOL='R' WHERE SOLICITUD.K_IDSOL=(select s.K_IDSOL from solicitud s, estudiante e where s.K_CODEST=e.K_CODEST and e.K_CODEST=".$codigo.")";
-          $consulta2="INSERT INTO HISTORICOSOLICITUD(K_IDHIST, F_HIST, I_ESTADOHIST,N_DESCHIST, K_IDSOL, K_CEDADMIN) VALUES(incremento_id_his_solicitud.nextval,SYSDATE, 'R', 'Pienso que los documentos estan invalidos',(select s.K_IDSOL from solicitud s, estudiante e where s.K_CODEST=e.K_CODEST and e.K_CODEST=".$codigo."), LTRIM('".$_SESSION['usuario']."', 'U'))";
+          $consulta2="INSERT INTO HISTORICOSOLICITUD(K_IDHIST, F_HIST, I_ESTADOHIST,N_DESCHIST, K_IDSOL, K_CEDADMIN) VALUES(incremento_id_his_solicitud.nextval,SYSDATE, 'R', 'Documentos Invalidos',(select s.K_IDSOL from solicitud s, estudiante e where s.K_CODEST=e.K_CODEST and e.K_CODEST=".$codigo."), LTRIM('".$_SESSION['usuario']."', 'U'))";
         }
 
         $stid = oci_parse($array["conexion"], $consulta);

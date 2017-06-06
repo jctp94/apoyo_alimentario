@@ -22,9 +22,6 @@
 	text-align: left;
 }
 
-
-
-
 .tablaVerificar{
 	height: 500px;
 	overflow-y: scroll;
@@ -45,8 +42,22 @@ body {
 	font-size: 20px;
 	padding-top: 20px;
 	padding-bottom: 20px;
+}
+
+#textoConvocatoria{
+	text-align: left;
+}
+
+#tituloConvocatoria{
+	color: red;
+    border-style: solid;
+	font-size: 18px;
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
 
 }
+
 #cargando{
     position:absolute;
     left: 0; top: 0;
@@ -298,3 +309,9 @@ input[type=checkbox].css-checkbox.lrg:checked + label.css-label.lrg{
 
     background-position: 0 -20px;
 }
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+} 
